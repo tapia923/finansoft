@@ -1,0 +1,144 @@
+﻿@model PlanillajeColectivos.DTO.Products.factura
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>factura</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.personId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.personId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.userId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.userId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.operationTypeId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.operationTypeId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.cash)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.cash)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.payCash)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.payCash)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.payCredit)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.payCredit)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.payTdebit)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.payTdebit)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.payTcredit)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.payTcredit)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.totalDiscount)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.totalDiscount)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.date)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.date)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.observation)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.observation)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.stateId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.stateId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.facturaNumber)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.facturaNumber)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.tipo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.tipo)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

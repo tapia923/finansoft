@@ -1,0 +1,144 @@
+﻿@model PlanillajeColectivos.DTO.Products.products
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "PRODUCTOS";
+
+    List<SelectListItem> categorias = (List<SelectListItem>)ViewBag.categorias;
+    List<SelectListItem> proveedores = (List<SelectListItem>)ViewBag.proveedores;
+    List<SelectListItem> medidas = (List<SelectListItem>)ViewBag.medidas;
+    List<SelectListItem> iva = (List<SelectListItem>)ViewBag.iva;
+    List<SelectListItem> presentacion = (List<SelectListItem>)ViewBag.presentacion;
+
+}
+<link href="~/Content/css/chosen.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Crear Nuevo Producto</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.barcode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.barcode, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.barcode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.categoriaId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.categoriaId, categorias, new { @class = "chosen-select-single", @id = "categoriaId" })
+                @Html.ValidationMessageFor(model => model.categoriaId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.providerId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.providerId, proveedores, new { @class = "chosen-select-single", @id = "providerId" })
+                @Html.ValidationMessageFor(model => model.providerId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.unitMeasureId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.unitMeasureId, medidas, new { @class = "chosen-select-single", @id = "unitMeasureId" })
+                @Html.ValidationMessageFor(model => model.unitMeasureId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ivaId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.ivaId, iva, new { @class = "chosen-select-single", @id = "ivaId" })
+                @Html.ValidationMessageFor(model => model.ivaId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.inventaryMin, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.inventaryMin, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.inventaryMin, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.priceIn, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.priceIn, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.priceIn, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.priceOut, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.priceOut, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.ValidationMessageFor(model => model.priceOut, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.priceOut2, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.priceOut2, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.priceOut2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" hidden>
+            @Html.LabelFor(model => model.presentationId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.presentationId, presentacion, new { @class = "chosen-select-single", @id = "presentationId" })
+                @Html.ValidationMessageFor(model => model.presentationId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.initialQuantity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.initialQuantity, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.initialQuantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Crear" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Regresar al listado", "Index")
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $(".chosen-select-single").chosen();
+            $(".chosen-select-multiple").chosen();
+        });
+    </script>
+
+}

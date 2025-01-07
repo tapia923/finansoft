@@ -1,0 +1,331 @@
+﻿@model IEnumerable<PlanillajeColectivos.DTO.Products.products>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "NUEVO PEDIDO CREDITO";
+}
+
+<link href="~/Content/css/chosen.css" rel="stylesheet" />
+<script src="~/Scripts/sweetalert2@9.js"></script>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-responsive table-bordered" border="1" cellpadding="0">
+            <thead id="headamorti" class="thead-inverse">
+                <tr>
+                    <th>Intern</th>
+                    <th>#</th>
+                    <th>Cantidad</th>
+                    <th>Codigo de Barras</th>
+                    <th>Nombre</th>
+                    <th>Precion Unidad</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tablaPedido"></tbody>
+        </table>
+
+        <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-2">
+                <h3>TOTAL</h3>
+            </div>
+            <div class="col-md-2">
+                <input id="valorTotal" readonly type="text" class="form-control" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="form-group">
+            <label class="control-label col-md-10">Clientes</label>
+            <div class="col-md-10">
+                @Html.DropDownList("clientes", null, new { @class = "chosen-select-single", @id = "cliente" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8"></div>
+    <div class="col-md-2">
+        <button id="btnTerminarFactura" class="btn btn-success">TERMINAR FACTURA</button>
+    </div>
+</div>
+
+
+<br />
+<br />
+<br />
+<table id="myTable" class="table table-striped table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.barcode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                Precio de Contado
+            </th>
+            <th>
+                Precio a Credito
+            </th>
+            <th>
+                Presentacion
+            </th>
+
+
+            <th>
+                En Inventario
+            </th>
+            <th>
+                Cantidad
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.barcode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.priceOut)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.priceOut2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.presentationId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.initialQuantity)
+                </td>
+
+                <td>
+                    <input type="text" class="form-control" id="@item.id" />
+                </td>
+                <td>
+                    <button class="classBtnAgregar btn btn-success" id="@item.id">Agregar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts
+{
+
+    <script>
+        $("#btnTerminarFactura").click(function () {
+            $("#btnTerminarFactura").prop("disabled", true);
+            var cliente = $("#cliente").val();
+            var total = $("#valorTotal").val();
+            var siHayProductos = $('td:nth-child(1)', "#tablaPedido").text();
+
+            if (siHayProductos != "") {
+                if (cliente != "") {
+                    total = total.replace(".", "");
+                    total = total.replace(".", "");
+                    total = total.replace(".", "");
+                    total = total.replace(",", "");
+                    total = total.replace(",", "");
+                    total = total.replace(",", "");
+
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("terminarFacturaCredito", "Procesos")",
+                        datatype: "Json",
+                        data: { total: total, cliente: cliente },
+                        success: function (data) {
+                            if (data == 1) {
+
+                                Swal.fire({
+                                    title: 'Factura realizada Correctamente!',
+                                    icon: 'success',
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: 'Ok'
+
+                                }).then((result) => {
+                                    if (result.value) {
+                                        location.reload();
+                                    };
+                                });
+
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'Error al Realizar Factura!'
+                                })
+                            }
+                        }
+                    });
+
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Seleccione un Cliente!'
+                    })
+                    $("#btnTerminarFactura").prop("disabled", false);
+                }
+            } else {
+                $("#btnTerminarFactura").prop("disabled", false);
+            }
+
+        });
+
+        $(document).ready(function () {
+
+            renderTabla();
+
+            $('#myTable').DataTable({
+                "language": {
+                    "url": "/Content/Spanish.json"
+                }
+            });
+
+            $(".classBtnAgregar").click(function () {
+                var id = $(this).attr("id");
+                var valInput = $("#"+id).val();
+
+                if (valInput > 0) {
+                    $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("verificarExistencia", "Procesos")",
+                    datatype: "Json",
+                    data: { id: id, cantidadPedida: valInput },
+                        success: function (data) {
+                            if (data == 0) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'Cantidad insuficiente en Inventario!'
+                                })
+                            } else {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "@Url.Action("AddProductoCredito", "Procesos")",
+                                    datatype: "Json",
+                                    data: { id: id, cantidad: valInput },
+                                    success: function (data) {
+                                        if (data == 1) {
+                                            renderTabla();
+                                            Swal.fire({
+                                                icon: 'success',
+                                                title: 'Ok',
+                                                text: 'Producto Agregado!'
+                                            })
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        $("#tablaPedido").on('click', 'button.borrar', function () {
+            var id = $(this).parents('tr');
+            var cId = $('td:nth-child(1)', id).text();
+
+            Swal.fire({
+                title: 'Quitar Producto?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'SI'
+            }).then((result) => {
+                if (result.value) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DeleteProductoContado", "Procesos")",
+                    datatype: "Json",
+                    data: { id: cId },//solo para enviar datos
+                    success: function (data) {
+                        Swal.fire(
+                            'Eliminado!',
+                            '',
+                            'success'
+                        )
+                        renderTabla();
+                    }
+                });
+                };
+            });
+        });
+
+
+        function renderTabla() {
+            $("#tablaPedido").empty();
+
+            $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("getPedidoCredito", "Procesos")",
+                    datatype: "Json",
+                    success: function (data) {
+                        data = JSON.parse(data);
+                        var total = 0;
+                        $.each(data, function (key, val) {
+
+                            total = total + val.total;
+
+                            var tr = '<tr>';
+                            tr += '<td>' + val.operatioId + '</td>';
+                            tr += '<td>' + (key + 1) + '</td>';
+                            tr += '<td>' + val.cantidad + '</td>';
+                            tr += '<td>' + val.codigoBarras + '</td>';
+                            tr += '<td>' + val.nombre + '</td>';
+                            tr += '<td>' + val.unidad + '</td>';
+                            tr += '<td>' + val.total + '</td>';
+                            tr += '<td><button class="borrar btn btn-danger btn-xs" id="' + val.operatioId + '">X</button></td>';
+                            tr += '</tr>';
+                            $('#tablaPedido').append(tr);
+                        });
+                        total = parseInt(total);
+                        $("#valorTotal").val(formatNumberMiles.new(total));
+                    }
+            });
+        }
+
+        $(document).ready(function () {
+            $(".chosen-select-single").chosen();
+            $(".chosen-select-multiple").chosen();    //DESPUES DEL FINAL DEL DOCUMENTO AL PRINCIPIO DE LOS SCRIPTS
+        });
+
+
+        //FORMATEAR UN NUMERO
+        var formatNumberMiles = {
+            separador: ".", // separador para los miles
+            sepDecimal: ',', // separador para los decimales
+            formatear: function (num) {
+                num += '';
+                var splitStr = num.split('.');
+                var splitLeft = splitStr[0];
+                var splitRight = splitStr.length > 1 ? this.sepDecimal + splitStr[1] : '';
+                var regx = /(\d+)(\d{3})/;
+                while (regx.test(splitLeft)) {
+                    splitLeft = splitLeft.replace(regx, '$1' + this.separador + '$2');
+                }
+                return this.simbol + splitLeft + splitRight;
+            },
+            new: function (num, simbol) {
+                this.simbol = simbol || '';
+                return this.formatear(num);
+            }
+        }
+    </script>
+}

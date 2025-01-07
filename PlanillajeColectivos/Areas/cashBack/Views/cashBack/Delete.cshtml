@@ -1,0 +1,104 @@
+﻿@model PlanillajeColectivos.DTO.Otros.cashBackModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>cashBackModel</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.terceroId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.terceroId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.fechaInicio)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.fechaInicio)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.fechaEntrega)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.fechaEntrega)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.valorEntregado)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.valorEntregado)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.fechaEntregado)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.fechaEntregado)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.periodoEnMeses)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.periodoEnMeses)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.valorActual)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.valorActual)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.porcetaje)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.porcetaje)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.destino)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.destino)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

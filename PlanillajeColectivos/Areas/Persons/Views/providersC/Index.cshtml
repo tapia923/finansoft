@@ -1,0 +1,116 @@
+﻿@model IEnumerable<PlanillajeColectivos.DTO.Products.providers>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "PROVEEDORES";
+}
+
+<p>
+    @Html.ActionLink("Crear Nuevo Proveedor", "Create")
+</p>
+<table id="myTable" class="table table-striped table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.economicActivityCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.locationId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.retentionId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.taxClassification)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.industryAndCommerce)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ivaId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cell)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.email)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.economicActivityCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.locationId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.retentionId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.taxClassification)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.industryAndCommerce)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ivaId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cell)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts
+{
+
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "language": {
+                    "url": "/Content/Spanish.json"
+                }
+            });
+        });
+    </script>
+}
+

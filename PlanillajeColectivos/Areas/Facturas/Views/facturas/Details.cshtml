@@ -1,0 +1,138 @@
+﻿@model PlanillajeColectivos.DTO.Products.factura
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>factura</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.personId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.personId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.userId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.userId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.operationTypeId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.operationTypeId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.cash)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.cash)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.payCash)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.payCash)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.payCredit)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.payCredit)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.payTdebit)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.payTdebit)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.payTcredit)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.payTcredit)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.totalDiscount)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.totalDiscount)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.date)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.date)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.observation)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.observation)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.stateId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.stateId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.facturaNumber)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.facturaNumber)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.tipo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.tipo)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

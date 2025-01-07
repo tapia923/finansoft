@@ -1,0 +1,488 @@
+﻿@model PlanillajeColectivos.DTO.Contabilidad.movimientos
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Crear Movimiento";
+
+}
+<script src="~/Scripts/sweetalert2@9.js"></script>
+<link href="~/Content/stylemovimientos.css" rel="stylesheet" />
+<link href="~/Content/css/chosen.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-md-3">
+        <label>Tipo Comprobante</label>
+        @Html.DropDownList("tiposComprobantes", null, new { @class = "chosen-select-single", @id = "tiposComprobantes" })
+    </div>
+
+    <div class="col-md-3">
+        <label>Forma de Pago</label>
+        @Html.DropDownList("FormasPago", null, new { @class = "chosen-select-single", @id = "FormasPago" })
+    </div>
+
+    <div class="col-md-3">
+        <label>Centro de Costos</label>
+        @Html.DropDownList("centroDeCostos", null, new { @class = "chosen-select-single", @id = "centroDeCostos" })
+    </div>
+
+    <div class="col-md-3">
+        <label>Tercero</label>
+        @Html.DropDownList("terceroComprobante", null, new { @class = "chosen-select-single", @id = "terceroComprobante" })
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-3">
+        <label>Fecha</label>
+        <input type="date" class="form-control" id="fecha" value="" max="">
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <label for="descripcion">Detalle: </label>
+        <input type="text" class="form-control" id="detalle">
+    </div>
+</div>
+
+
+<div id="comandos" style="margin-top:40px; margin-bottom:5px;">
+    <div>
+        <button type="button" class="btn" id="agregar" aria-label="Left Align">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i> Agregar cuenta
+        </button>
+
+        <a id="btnGrabar" aria-label="Left Align" data-toggle="modal" data-target="#centro" style="background-color: #509601; color: #FFF; padding: 6px; border: 1px solid; border-radius: 5px;">
+            <i class="fa fa-check-circle" aria-hidden="true"></i> Grabar
+        </a>
+    </div>
+</div>
+
+<div id="anotaciones2">
+    <div class='row'>
+        <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+            <div>
+                @*CPalacios - problema en barra de desplazamiento
+                    <div class="aaa">*@
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-responsive" id="anotaciones" style="font-size: 13px;">
+                        <thead>
+                            <tr>
+                                <th width="20%" class="columnatablaazul">Cuenta</th>
+                                <th width="20%" class="columnatablaazul">Tercero</th>
+                                <th width="15%" class="columnatablaazul2">CC</th>
+                                <th width="10%" class="columnatablaazul">Base</th>
+                                <th width="15%" class="columnatablaazul2">Debito</th>
+                                <th width="15%" class="columnatablaazul">Credito</th>
+                                <th width="5%" class="columnatablaazul">Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyfilas"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-offset-3 col-sm-9">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-responsive" id="tabladetalle" style="font-size: 13px;">
+            <thead>
+                <tr>
+                    <th width="60%" class="headercrematablas">Sumas</th>
+                    <th width="20%" class="headercrematablas">Debito</th>
+                    <th width="20%" class="headercrematablas">Credito</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" class="form-control decimal" id="sumas" placeholder="" ondrop="return false;" onpaste="return false;" readonly></td>
+                    <td><input readonly type="text" class="form-control decimal" id="totDebito" placeholder="Debito" value="0"></td>
+                    <td><input readonly type="text" class="form-control decimal" id="totCredito" placeholder="Credito" value="0"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            $(".chosen-select-single").chosen();
+            $(".chosen-select-multiple").chosen();
+
+            //$(".s2").each(function () {
+            //    initSelect2($(this));
+            //});
+
+            $('body').on('DOMNodeInserted', 'select', function () {
+                initSelect2($(this));
+            });
+        });
+
+
+        function formatRepo(repo) {
+            if (repo.loading) return repo.text;
+            var markup = repo.id + " - " + repo.text;
+            return markup;
+        };
+        function formatRepoSelection(repo) {
+            return repo.id || repo.text;
+        }
+
+        function initSelect2(s2) {
+            var urlbyType = "";
+            switch (s2.data("type")) {
+                case "cuentas": urlbyType = "/Contabilidad/movimientosC/GetCuentasParaSelect2"; break;
+                case "terceros": urlbyType = "/Contabilidad/movimientosC/GetTercerosSelect2"; break;
+                case "cc": urlbyType = "/Contabilidad/movimientosC/GetCCSelect2"; break;
+
+                default:
+
+            }
+            //  alert(s2);
+            s2.select2({
+                ajax: {
+                    //   containerClass: "select2-container.input-mini",
+                    url: urlbyType,
+                    dataType: 'json',
+                    type: "GET",
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            term: params.term, // search term
+                            type: $(this).data("type")
+                        };
+                    },
+                    results: function (data, params) {
+                        return {
+                            results: data,
+                        };
+                    },
+                    cache: false
+                },
+                templateResult: formatRepo,
+                templateSelection: formatRepoSelection
+            }).on('select2:close', function (evt) {
+                var context = $(evt.target);
+
+                $(document).on('keydown.select2', function (e) {
+                    if (e.which === 9) { // tab
+                        var highlighted = context
+                            .data('select2')
+                            .$dropdown
+                            .find('.select2-results__option--highlighted');
+                        if (highlighted) {
+                            var id = highlighted.data('data').id;
+                            context.val(id).trigger('change');
+                        }
+                    }
+                });
+
+                // unbind the event again to avoid binding multiple times
+                setTimeout(function () {
+                    $(document).off('keydown.select2');
+                }, 1);
+            });;
+        }
+
+
+        $("#agregar").click(function () {
+            funcAgregar();
+        });
+
+        function funcAgregar() {
+            var newTR = $('<tr>').appendTo("#anotaciones");
+
+            var tdS2 = $('<td>').appendTo(newTR);
+            tdS2.append('<select data-type="cuentas" class="select2-container.input-mini cuentasFilas" ></select>');
+
+            var tdS2 = $('<td>').appendTo(newTR);
+            tdS2.append('<select data-type="terceros"  class="select2-container.input-mini tercerosFilas" ></select>');
+
+            var tdS2 = $('<td>').appendTo(newTR);
+            tdS2.append('<select data-type="cc"  class="select2-container.input-mini centroCostosFilas" ></select>');
+
+            newTR.append('<td><input type="text" class="form-control baseFilas" value="0"></td>');
+            newTR.append('<td><input type="text" class="form-control debitoFilas" value="0"></td>');
+            newTR.append('<td><input type="text" class="form-control creditoFilas" value="0"></td>');
+            newTR.append('<td><button class="borrar btn btn-danger btn-xs borrarFilas">X</button></td>');
+        }
+
+        $(document).on('keyup', '.debitoFilas', function () {
+            desactivarCredito($(this));
+            sumaDebito();
+            sumaCredito();
+        });
+
+        $(document).on('keyup', '.creditoFilas', function () {
+            desactivarDebito($(this));
+            sumaCredito();
+            sumaDebito();
+        });
+
+        $(document).on('click', '.borrarFilas', function () {
+            $(this).parents('tr').remove();
+            sumaDebito();
+            sumaCredito();
+        });
+
+        function desactivarCredito(actual) {
+            var cId = actual.parents('tr')["0"].cells[5].children["0"].value = "0";
+        }
+
+        function desactivarDebito(actual) {
+            var cId = actual.parents('tr')["0"].cells[4].children["0"].value = "0";
+        }
+
+        function sumaDebito() {
+            var total = 0;
+            $('.debitoFilas').each(function () {
+                var cRow = $(this).parents('tr'); //datos en json
+                var cId = $('td:nth-child(5)', cRow).val();
+
+                var entero = $(this).val();
+                var entero1 = entero.replace(".", "");
+                entero1 = entero1.replace(".", "");
+                entero1 = entero1.replace(".", "");
+                entero1 = entero1.replace(".", "");
+                var entero2 = entero1.replace(",", "");
+                total += Number(entero2);
+                $('#totDebito').val(total);
+
+                var entrada = $('#totDebito').val();
+                var num = entrada.replace(/\./g, "");
+                if (!isNaN(num)) {
+                    num = num.toString().split("").reverse().join("").replace(/(?=\d*\.?)(\d{3})/g, "$1.");
+                    num = num.split("").reverse().join("").replace(/^[\.]/, "");
+                    entrada = num;
+                } else {
+                    entrada = input.value.replace(/[^\d\.]*/g, "");
+                }
+                $('#totDebito').val(entrada);
+            });
+        }
+        function sumaCredito() {
+            var total = 0;
+            $('.creditoFilas').each(function () {
+                var cRow = $(this).parents('tr'); //datos en json
+                var entero = $(this).val();
+                var entero1 = entero.replace(".", "");
+                entero1 = entero1.replace(".", "");
+                entero1 = entero1.replace(".", "");
+                entero1 = entero1.replace(".", "");
+                var entero2 = entero1.replace(",", "");
+                total += Number(entero2);
+                $('#totCredito').val(total);
+
+                var entrada = $('#totCredito').val();
+                var num = entrada.replace(/\./g, "");
+                if (!isNaN(num)) {
+                    num = num.toString().split("").reverse().join("").replace(/(?=\d*\.?)(\d{3})/g, "$1.");
+                    num = num.split("").reverse().join("").replace(/^[\.]/, "");
+                    entrada = num;
+                } else {
+                    entrada = input.value.replace(/[^\d\.]*/g, "");
+                }
+                $('#totCredito').val(entrada);
+            });
+        }
+
+        $("#btnGrabar").click(function () {
+            var valido = false;
+            var contador = 0;
+            $('.creditoFilas').each(function () {
+                contador++;
+            });
+            var totDebito = $('#totDebito').val();
+            var totCredito = $('#totCredito').val();
+            totDebito = totDebito.replace(".", "");
+            totDebito = totDebito.replace(".", "");
+            totDebito = totDebito.replace(",", "");
+            totDebito = totDebito.replace(",", "");
+            totCredito = totCredito.replace(".", "");
+            totCredito = totCredito.replace(".", "");
+            totCredito = totCredito.replace(",", "");
+            totCredito = totCredito.replace(",", "");
+            if (contador > 1) {
+                if (totDebito == totCredito) {
+                    if ($("#fecha").val() != "") {
+                        if ($("#tiposComprobantes").val() != "") {
+                            if ($("#FormasPago").val() != "") {
+                                if ($("#detalle").val() != "") {
+                                    if ($("#centroDeCostos").val() != "") {
+                                        if ($("#terceroComprobante").val() != "") {
+                                            contador = 1;
+                                            $('.creditoFilas').each(function () {
+                                                if ($(this).parents('tr')["0"].cells["0"].children["0"].value != "") {
+                                                    if ($(this).parents('tr')["0"].cells[1].children["0"].value != "") {
+                                                        if ($(this).parents('tr')["0"].cells[2].children["0"].value) {
+                                                            if ($(this).parents('tr')["0"].cells[4].children["0"].value == 0 && $(this).parents('tr')["0"].cells[5].children["0"].value == 0) {
+                                                                Swal.fire({
+                                                                    icon: 'error',
+                                                                    title: 'Oops...',
+                                                                    text: 'No hay valores en la Fila ' + contador + '!'
+                                                                })
+                                                            } else {
+                                                                valido = true;
+                                                            }
+                                                        } else {
+                                                            Swal.fire({
+                                                                icon: 'error',
+                                                                title: 'Oops...',
+                                                                text: 'Selecciones un Centro de Costo en la Fila ' + contador + '!'
+                                                            })
+                                                        }
+                                                    } else {
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Oops...',
+                                                            text: 'Selecciones un Tercero en la Fila ' + contador + '!'
+                                                        })
+                                                    }
+                                                } else {
+                                                    Swal.fire({
+                                                        icon: 'error',
+                                                        title: 'Oops...',
+                                                        text: 'Selecciones una Cuenta en la Fila ' + contador + '!'
+                                                    })
+                                                }
+                                                contador++;
+                                            });
+                                        } else {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Oops...',
+                                                text: 'Seleccione un Tercero para el Comprobante!'
+                                            })
+                                        }
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Seleccione un Centro de Costos para el Comprobante!'
+                                        })
+                                    }                                   
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'El campo "Detalle" no puede estar vacio!'
+                                    })
+                                }
+                                
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'Seleccione una Forma de Pago!'
+                                })
+                            }
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Seleccione un Tipo de Comprobante!'
+                            })
+                        }
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Seleccione una Fecha!'
+                        })
+                    }
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Las sumas Debito y Credito deben ser iguales!'
+                    })
+                }
+
+            }
+            if (valido) {
+                var movimientos = new Array();
+                var otrosDatos = new Array();
+                var totDebito = $('#totDebito').val();
+                totDebito = totDebito.replace(".", "");
+                totDebito = totDebito.replace(".", "");
+                totDebito = totDebito.replace(",", "");
+                totDebito = totDebito.replace(",", "");
+
+                otrosDatos.push($("#fecha").val());
+                otrosDatos.push($("#tiposComprobantes").val());
+                otrosDatos.push($("#FormasPago").val());
+                otrosDatos.push($("#detalle").val());
+                otrosDatos.push(totDebito);
+                otrosDatos.push($("#centroDeCostos").val());
+                otrosDatos.push($("#terceroComprobante").val());
+
+
+                $('.creditoFilas').each(function () {
+                    var movs = new Array();
+                    movs.push($(this).parents('tr')["0"].cells["0"].children["0"].value);
+                    movs.push($(this).parents('tr')["0"].cells[1].children["0"].value);
+                    movs.push($(this).parents('tr')["0"].cells[2].children["0"].value);
+                    movs.push($(this).parents('tr')["0"].cells[3].children["0"].value);
+                    var debi = $(this).parents('tr')["0"].cells[4].children["0"].value;
+
+                    debi = debi.replace(".", "");
+                    debi = debi.replace(".", "");
+                    debi = debi.replace(".", "");
+                    debi = debi.replace(".", "");
+                    debi = debi.replace(".", "");
+                    debi = debi.replace(".", "");
+
+                    var cred = $(this).parents('tr')["0"].cells[5].children["0"].value;
+                    cred = cred.replace(".", "");
+                    cred = cred.replace(".", "");
+                    cred = cred.replace(".", "");
+                    cred = cred.replace(".", "");
+                    cred = cred.replace(".", "");
+                    cred = cred.replace(".", "");
+                    cred = cred.replace(".", "");
+
+
+                    movs.push(debi);
+                    movs.push(cred);
+                    movimientos.push(movs);
+                });
+                console.log(movimientos);
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("crearMovimiento", "movimientosC")",
+                    datatype: "Json",
+                    data: { movs: movimientos, otrosDatos:otrosDatos },//solo para enviar datos
+                    success: function (data) {
+                        if (data == "si") {
+                            location.reload();
+                        }
+                    }
+                });
+            }
+        });
+
+        /* SEPARADOR DE MILES POR KEY UP */
+        $('table').on('mouseenter', 'input', function () {
+            $(this).on({
+                "focus": function (event) {
+                    $(event.target).select();
+                },
+                "keyup": function (event) {
+                    $(event.target).val(function (index, value) {
+                        return value.replace(/\D/g, "")
+                            .replace(/([0-9])([0-9]{3})$/, '$1.$2')
+                            .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+                    });
+                }
+            });
+        });
+                /*FIN SEPARADOR DE MILES POR KEY UP*/
+
+    </script>
+}

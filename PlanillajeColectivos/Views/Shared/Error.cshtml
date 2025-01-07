@@ -1,0 +1,17 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+}
+
+<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">Error al procesar la solicitud.</h2>
+
+<p>
+    @Html.EditorFor(model => model.ActionName, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.EditorFor(model => model.ControllerName, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.EditorFor(model => model.Exception.GetType().Name, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.EditorFor(model => model.Exception.Message, new { htmlAttributes = new { @class = "form-control" } })
+
+</p>
+

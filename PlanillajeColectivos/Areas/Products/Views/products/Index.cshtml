@@ -1,0 +1,122 @@
+﻿@model IEnumerable<PlanillajeColectivos.DTO.Products.products>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "PRODUCTOS";
+}
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<p>
+    @Html.ActionLink("Crear Nuevo Producto", "Create")
+</p>
+<table id="myTable" class="table table-striped table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.barcode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.priceIn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.priceOut)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.priceOut2)
+            </th>
+            <th>
+                Presentacion
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.providerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ivaId)
+            </th>
+            <th>
+                En Inventario
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.barcode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.priceIn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.priceOut)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.priceOut2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.presentationId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.providerFK.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ivaFK.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.initialQuantity)
+                </td>
+                <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.id }) |
+                        @Html.ActionLink("Detalles", "Details", new { id = item.id }) |
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.id })
+                    </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts
+{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            
+
+            $("#myTable").DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf'
+                ],
+                "language": {
+                    "url": "/Content/Spanish.json"
+                }
+
+
+            });
+        })
+
+    </script>
+}

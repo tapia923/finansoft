@@ -1,0 +1,136 @@
+﻿@model PlanillajeColectivos.DTO.Contabilidad.comprobante
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>comprobante</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.tipoComprobante)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.tipoComprobante)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.numero)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.numero)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.centroCostoId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.centroCostoId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.detalle)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.detalle)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.terceroId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.terceroId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.valorTotal)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.valorTotal)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.anio)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.anio)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.mes)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.mes)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.dia)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.dia)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.fechaCreacion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.fechaCreacion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.usuarioId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.usuarioId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.formaPagoId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.formaPagoId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.documento)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.documento)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+﻿@model IEnumerable<PlanillajeColectivos.DTO.Products.factura>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "FACTURAS CREDITOS";
+}
+
+    <table class="table table-responsive">
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                CLIENTE
+            </th>
+            <th>
+                VENDEDOR
+            </th>
+            <th>
+                FECHA
+            </th>
+            <th>
+                TIPO
+            </th>
+            <th>
+                FECHA LIMITE DE PAGO
+            </th>
+            <th>
+                TOTAL
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.persons.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.usersTabla.nombre) @Html.DisplayFor(modelItem => item.usersTabla.apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                @{
+                    if (item.tipo == 1)
+                    {
+                        <label>CONTADO</label>
+                    }
+                    else
+                    {
+                        <label>CREDITO</label>
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fechaPagoCredito)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.total)
+            </td>
+            <td>
+                @Html.ActionLink("VER", "verFacturaCredito", new { id = item.id }) |
+            </td>
+        </tr>
+        }
+
+    </table>

@@ -1,0 +1,127 @@
+﻿@model IEnumerable<PlanillajeColectivos.DTO.Products.categorias>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Categorias";
+}
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+@* QUE FUNCION REALIZAN LOS SCRIPT  *@
+<script src="~/Scripts/Areas/Productos/Categorias.js"></script>
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+@if (ViewBag.message != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong> @ViewBag.message</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+<p>
+    <button class="btn btn-success" id="btnCrearCategoria"><i class="fa fa-plus"></i> Crear Categoria</button>
+</p>
+<div class="table table-responsive">
+    <table id="myTableCat" class="table table-striped table-bordered table-responsive" width="95%">
+        <thead>
+            <tr>
+                <th width="5%">
+                    # Codigo
+                </th>
+                <th width="79%">
+                    Categoria
+                </th>
+                <th width="8%">
+                    Estado
+                </th>
+                <th width="8%">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td width="5%">
+                       @Html.DisplayFor(modelItem => item.id)
+                    </td>
+                    <td width="79%">
+                        @Html.DisplayFor(modelItem => item.descripcion)
+                    </td>
+                    <td width="8%">
+
+                        <button class="btn btn-sm @Html.Raw(item.estado ? "btn-success" : "btn-danger")">
+                            @Html.Raw(item.estado ? "Activo" : "Inactivo")
+                        </button>
+
+
+                        @*@if (item.estado == true)
+                        {
+                            <button class="btn btn-sm btn-success">Activo</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-sm btn-danger">Inhactivo</button>
+                        }*@
+
+                    </td>
+                    <td width="8%">
+                        @*PORQUE USAR DATA-ID Y NO ID  *@
+                        <button class="btn btn-inline btn-xs btn-primary  btnEditarCategoria" title="Editar" data-id="@item.id"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+
+                        <button class="btn btn-inline btn-xs @Html.Raw(item.estado ? "btn-danger" : "btn-success") btnDisableCat" 
+                                title="@Html.Raw(item.estado ? "Deshabilitar" : "Habilitar")" 
+                                data-value="@Html.Raw(item.estado ? 1 : 0)" 
+                                data-id="@item.id">
+                            <i class="fa @Html.Raw(item.estado ? "fa-ban" : "fa-refresh")" aria-hidden="true"></i>
+                        </button>
+
+                        @*@if (item.estado == true)
+                        {
+                            <button class="btn btn-inline btn-xs btn-danger btnDisableCat" title="Deshabilitar" data-value="1" data-id="@item.id"><i class="fa fa-ban" aria-hidden="true"></i></button>
+                        }
+                        else
+                        { <button class="btn btn-inline btn-xs btn-success btnDisableCat" title="Habilitar" data-value="0" data-id="@item.id"><i class="fa fa-refresh" aria-hidden="true"></i></button>}*@
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section scripts
+{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+
+            $("#myTableCat").DataTable({
+                dom: 'Bfrti',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf'
+                ],
+                "language": {
+                    "url": "/Content/Spanish.json"
+                }
+
+
+            });
+        })
+
+    </script>
+}

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<PlanillajeColectivos.DTO.Products.factura>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "FACTURAS ABASTECIMIENTOS";
+}
+
+<script src="~/Scripts/Facturas/Abastecimiento/Index.js"></script>
+<script src="~/Scripts/sweetalert2@10.js"></script>
+<div class="align-content-lg-start">
+    <table id="myTable" class="table table-striped table-responsive">
+        <thead>
+            <tr>
+                <th>
+                    FECHA
+                </th>
+                <th>
+                    NUMERO FACTURA
+                </th>
+                <th>
+                    PROVEEDOR
+                </th>
+                <th>
+                    TOTAL
+                </th>
+                <th>OPCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.facturaFisica)
+                    </td>
+                    <td>
+                        @(item.ProveedorFK.name)
+                    </td>
+                    <td>
+                        @(item.total-item.totalDiscount)
+                    </td>
+                    <td>
+                        <a class="btn btn-inline btn-xs btn-danger" title="Detalles" href="/Facturas/facturas/verFacturaAbastecimiento?id=@item.id"><i class="fa fa-eye"></i></a>
+                        <button class="btn btn-xs btn-success EditarFC" name="@item.id"><i class="fa fa-pencil"></i></button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+        
+
+
+    </table>
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var TraduccionDatatable = {
+                "sProcessing": "Procesando...", "sLengthMenu": "Mostrar _MENU_ registros", "sZeroRecords": "No se encontraron resultados", "sEmptyTable": "No hay registros", "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros", "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros", "sInfoFiltered": "(filtrado de un total de _MAX_ registros)", "sInfoPostFix": "", "sSearch": "Buscar:", "sUrl": "", "sInfoThousands": ",", "sLoadingRecords": "Cargando...", "select": { "rows": { _: "Has seleccionado %d filas", 0: "", 1: "1 fila seleccionada" } }, "oPaginate": { "sFirst": "<<", "sLast": ">>", "sNext": ">", "sPrevious": "<" }, "oAria": { "sSortAscending": ": Activar para ordenar la columna de manera ascendente", "sSortDescending": ": Activar para ordenar la columna de manera descendente" }
+            };
+            $('#myTable').DataTable({
+                dom: 'Bfrtip',
+                "language": TraduccionDatatable,
+                buttons: [
+                    'copyHtml5', 'excelHtml5', 'pdfHtml5', 'csvHtml5'
+                ]
+            });
+
+        })
+
+    </script>
+}

@@ -1,0 +1,160 @@
+﻿@model PlanillajeColectivos.DTO.Products.providers
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "EDITAR PROVEEDOR";
+
+
+    List<SelectListItem> economicActivities = (List<SelectListItem>)ViewBag.economicActivities;
+    List<SelectListItem> locations = (List<SelectListItem>)ViewBag.locations;
+    List<SelectListItem> retentions = (List<SelectListItem>)ViewBag.retentions;
+    List<SelectListItem> taxClassification = (List<SelectListItem>)ViewBag.taxClassification;
+    List<SelectListItem> industryAndCommerceList = (List<SelectListItem>)ViewBag.industryAndCommerceList;
+    List<SelectListItem> iva = (List<SelectListItem>)ViewBag.iva;
+}
+
+<link href="~/Content/css/chosen.css" rel="stylesheet" />
+
+@using (Html.BeginForm("Edit", "providersC", new { area = "Persons" }, FormMethod.Post, new { id = "theForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.id)
+
+        
+
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Actividad Económica</label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.economicActivityCode, economicActivities, null, new { @class = "chosen-select-single", @id = "economicActivityCode" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Ubicación</label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.locationId, locations, null, new { @class = "chosen-select-single", @id = "locationId" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Retención en la Fuente</label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.retentionId, retentions, null, new { @class = "chosen-select-single", @id = "retentionId" })
+            </div>
+        </div>
+
+        <div class="form-group" id="divTaxClassification">
+            <label class="control-label col-md-2">Clasificación Tributaria</label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.taxClassification, taxClassification, null, new { @class = "chosen-select-single", @id = "taxClassification" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Industria y Comercio</label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.industryAndCommerce, industryAndCommerceList, null, new { @class = "chosen-select-single", @id = "industryAndCommerce" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Iva</label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.ivaId, iva, null, new { @class = "chosen-select-single", @id = "ivaId" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nit, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nit, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.address, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.address, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.cell, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.cell, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.cell, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.phone, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Guardar" id="submitBtn" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Regresar al Listado", "Index")
+</div>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $(".chosen-select-single").chosen();
+            $(".chosen-select-multiple").chosen();    //DESPUES DEL FINAL DEL DOCUMENTO AL PRINCIPIO DE LOS SCRIPTS
+        });
+
+        $("#retentionId").change(function () {
+            var retention = $("#retentionId").val();
+            if (retention == "8") {
+                $("#divTaxClassification").hide();
+                $('#taxClassification').val("").trigger('chosen:updated');
+            } else {
+                $("#divTaxClassification").show();
+            }
+        });
+
+        $("#submitBtn").click(function () {
+            //$("#economicActivityCode").val($("#economicActivity").val());
+            //$("#locationId").val($("#location").val());
+            //$("#retentionId").val($("#retention").val());
+            //$("#taxClassification").val($("#taxClassificationSelect").val());
+            //$("#industryAndCommerce").val($("#industryAndCommerceSelect").val());
+            //$("#ivaId").val($("#iva").val());
+            $('#theForm').submit();
+        });
+    </script>
+}

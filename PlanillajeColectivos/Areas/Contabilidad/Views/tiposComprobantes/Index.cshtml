@@ -1,0 +1,60 @@
+﻿@model IEnumerable<PlanillajeColectivos.DTO.Contabilidad.tipoComprobante>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Tipos Comprobantes";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.codigo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.claseComprobante)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.consecutivo)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.claseComprobante)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.consecutivo)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

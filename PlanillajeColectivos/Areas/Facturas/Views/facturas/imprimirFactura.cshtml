@@ -1,0 +1,213 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Imprimir</title>
+
+    <style type="text/css">
+        .numeros {
+            font-size: 19px;
+        }
+
+        table {
+            vertical-align: top;
+            border: 1px solid black;
+            padding-bottom: 5px;
+        }
+
+        tr {
+            vertical-align: top;
+        }
+
+        td {
+            vertical-align: top;
+        }
+
+        .midnight-blue {
+            background: #2c3e50;
+            padding: 4px 4px 4px;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .silver {
+            /*background: white;*/
+            padding: 3px 4px 3px;
+        }
+
+        .clouds {
+            /*background: #ecf0f1;*/
+            padding: 3px 4px 3px;
+        }
+
+        .border-top {
+            border-top: solid 1px #bdc3c7;
+        }
+
+        .border-left {
+            border-left: solid 1px #bdc3c7;
+        }
+
+        .border-right {
+            border-right: solid 1px #bdc3c7;
+        }
+
+        .border-bottom {
+            border-bottom: solid 1px #bdc3c7;
+        }
+
+        table.page_footer {
+            width: 100%;
+            border: none;
+            background-color: white;
+            padding: 2mm;
+            border-collapse: collapse;
+            border: none;
+        }
+
+        tr.border_bottom td,
+        th {
+            border-bottom: 1pt solid black;
+            /*border-top: 1pt solid black;*/
+            font-weight: bold;
+            /*background: black;
+        color: white;*/
+        }
+
+        td,
+        th {
+            padding-top: 5px;
+        }
+    </style>
+
+</head>
+<body>
+
+    @model IEnumerable<PlanillajeColectivos.DTO.Products.pedidosViewModel>
+
+    <page backtop="2mm" backbottom="2mm" backleft="0mm" backright="129mm" style="font-size: 10pt; font-family: arial">
+        <table cellspacing="0" style="width: 100%; border: none;">
+            <tr>
+                <td style="width: 75%; color: #444444;">
+                    <img alt="Logo" style="width: 30%;" src="~/Content/imagenes/Logo.jpeg" />
+                </td>
+
+                <td style="width: 25%;text-align:right">
+                    <h2>Factura Nº @ViewBag.numeroFactura</h2>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100%; font-size:12px;text-align:center">
+                    <span style="font-size:20px;font-weight:bold">MERKATO DOMICILIOS</span>
+                    <div class="numeros">
+                        <br>CARRERA 5ta #22 - 27 B/San Vicente<br>
+                        Teléfono: 3024520920<br>
+                        Email: supercosecha@hotmail.com<br>
+                        Nit: 901344066-0<br>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <p>Autorizacion Min-Tic 00008436 de 21 nov 2016</p>
+        <br>
+        <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+            <tr class="border_bottom">
+                <td colspan="2" style="width:100%;">FACTURAR A</td>
+            </tr>
+            <tr>
+                <td><b>Cliente</b></td>
+                <td>@ViewBag.cliente</td>
+            </tr>
+
+            <tr>
+                <td><b>Dirección</b></td>
+                <td>@ViewBag.direccion</td>
+            </tr>
+            <tr>
+                <td><b>Celular</b></td>
+                <td>@ViewBag.celular</td>
+            </tr>
+        </table>
+
+        <br>
+        <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+            <tr class="border_bottom">
+                <td style="width:30%;">VENDEDOR</td>
+                <td style="width:20%;">FECHA</td>
+                <td style="width:30%;">FORMA DE PAGO</td>
+                <td style="width:20%;">MONTO</td>
+            </tr>
+            <tr>
+                <td>
+                    @ViewBag.vendedor
+                </td>
+                <td>@ViewBag.fecha</td>
+                <td>
+                    Efectivo
+                </td>
+                <td class="numeros">@ViewBag.efectivo</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    Credito
+                </td>
+                <td class="numeros">@ViewBag.credito</td>
+            </tr>
+        </table>
+        <br>
+
+        <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+            <tr class="border_bottom">
+                <th style="width: 5%;text-align:center">CAN.</th>
+                <th style="width: 60%">DESCRIPCION</th>
+                <th style="width: 15%;text-align: right">PRECIO UNIT.</th>
+                <th style="width: 5%;text-align: right">IVA</th>
+                <th style="width: 15%;text-align: right">PRECIO TOTAL</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="width: 5px; text-align:center">@item.cantidad</td>
+                    <td style="width: 60px;">@item.nombre</td>
+                    <td style="width: 15px; text-align: right">@Convert.ToInt32(item.unidad)</td>
+                    <td style="width: 5px; text-align: right">19%</td>
+                    <td style="width: 15px; text-align: right">@Convert.ToInt32(item.total)</td>
+                </tr>
+            }
+
+            <tr>
+                <td colspan="4" style="widtd: 85%; text-align: right;">-</td>
+                <td style="widtd: 15%; text-align: right;"></td>
+            </tr>
+
+            <tr>
+                <td colspan="4" style="widtd: 85%; text-align: right;">EFECTIVO &#36; </td>
+                <td style="widtd: 15%; text-align: right;" class="numeros"> @ViewBag.efectivo</td>
+            </tr>
+
+            <tr>
+                <td colspan="4" style="widtd: 85%; text-align: right;">CAMBIO &#36; </td>
+                <td style="widtd: 15%; text-align: right;" class="numeros"> 0</td>
+            </tr>
+            <tr>
+                <td colspan="4" style="widtd: 85%; text-align: right;">-</td>
+                <td style="widtd: 15%; text-align: right;"></td>
+            </tr>
+            <tr>
+                <td colspan="4" style="widtd: 85%; text-align: right;">TOTAL &#36; </td>
+                <td style="widtd: 15%; text-align: right;" class="numeros"> @ViewBag.total</td>
+            </tr>
+        </table>
+        <br>
+        <div style="font-size:11pt;text-align:left;font-weight:bold">Gracias por su compra!</div>
+    </page>
+</body>
+</html>

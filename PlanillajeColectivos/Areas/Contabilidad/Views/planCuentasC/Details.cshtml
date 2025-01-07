@@ -1,0 +1,98 @@
+﻿@model PlanillajeColectivos.DTO.Contabilidad.planCuentas
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>planCuentas</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.nombre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.nombre)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.codigo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.codigo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.naturaleza)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.naturaleza)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.reqTercero)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.reqTercero)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.reqCosto)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.reqCosto)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.corriente)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.corriente)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.validaSaldo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.validaSaldo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.saldo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.saldo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.tipo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.tipo)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

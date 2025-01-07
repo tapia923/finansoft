@@ -1,0 +1,158 @@
+﻿@model IEnumerable<PlanillajeColectivos.DTO.Products.products>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "ABASTECER";
+}
+@*comentario*@
+<link href="~/Content/css/chosen.css" rel="stylesheet" />
+<script src="~/Scripts/Facturas/Abastecimiento/EditarFacturaCompra.js"></script>
+<script src="~/Scripts/sweetalert2@10.js"></script>
+<input type="hidden" id="AuxProveedor" value="@ViewBag.SelectProveedor" />
+<input type="hidden" id="IdFactura" value="@ViewBag.IdFactura" />
+<input type="hidden" id="AuxFormaPago" value="@ViewBag.SelectFormaPago" />
+<div class="card">
+    <div class="card-body">
+        <table class="table table-responsive table-bordered" border="1" cellpadding="0">
+            <thead id="headamorti" class="thead-inverse">
+                <tr>
+                    <th width="2%">No INTERNO</th>
+                    <th width="2%">#</th>
+                    <th>CANTIDAD</th>
+                    <th>REFERENCIA</th>
+                    <th>NOMBRE</th>
+                    <th>PRECIO UNITARIO</th>
+                    <th>SUB TOTAL</th>
+                    <th>DESCUENTO</th>
+                    <th>IVA</th>
+                    <th>TOTAL</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tablaPedido"></tbody>
+        </table>
+
+        <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-2">
+                <h3>TOTAL</h3>
+            </div>
+            <div class="col-md-2">
+                <input id="valorTotal" readonly type="text" class="form-control" />
+            </div>
+        </div>
+    </div>
+</div>
+ 
+
+<hr/>
+<div class="card">
+    <div class="card-header">
+        DATOS DE LA FACTURA
+    </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 col-xs-12 col-lg-3">
+                    <div class="form-group">
+                        <label>No FACTURA FISICA:</label>
+                        <input type="text" class="form-control" id="facturaFisica" value="@ViewBag.FacturaFisica" />
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12 col-lg-3">
+                    <div class="form-group">
+                        <label>PROVEEDOR:</label>
+                        @Html.DropDownList("providers", null, new { @class = "chosen-select-single", @id = "provider" })
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12 col-lg-3">
+                    <div class="form-group">
+                        <label>FORMA DE PAGO:</label>
+                        @Html.DropDownList("ListFormasPago", null, new { @class = "form-control", @id = "FormaPago" })
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-2">
+                    <button id="btnGuardar" class="btn btn-xs btn-success">Guardar</button>
+                    <button id="btnCancelar" class="btn btn-xs btn-danger">Cancelar</button>
+                </div>
+            </div>
+        </div>
+</div>
+
+<hr/>
+
+<table id="myTable" class="table table-striped table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.barcode)
+            </th>
+            <th width="30%">
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th width="10%">
+                Precio de Entrada
+            </th>
+            <th>
+                En Inventario
+            </th>
+            <th>
+                IVA
+            </th>
+            <th>
+                IVA Actual
+            </th>
+            <th width="5%">
+                Cantidad
+            </th>
+            <th>Opción Descuento</th>
+            <th width="10%">Descuento</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="tablaProductos">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.barcode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    <input type="text" name="@item.id" class="nuevoPrecioClass form-control" value="@item.priceIn" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.initialQuantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ivaFK.name)
+                </td>
+                <td>
+                    @Html.DropDownList("ListIva", null, "Actual", new { @class = "form-control", @id = "IVA" + item.id })
+                </td>
+                <td>
+                    <input type="text" class="form-control" id="@item.id" />
+                </td>
+                <td>
+                    <select class="form-control SelectDescuento" id="@("SD"+item.id)">
+                        <option value="1">Valor</option>
+                        <option value="2">Porcentaje</option>
+                    </select>
+                </td>
+                <td>
+                    <input class="form-control miles VD" type="text" name="@("VD"+item.id)" id="@("VD"+item.id)" value="0" />
+                </td>
+                <td>
+                    <button class="classBtnAgregar btn btn-success" id="@item.id">Agregar</button>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+

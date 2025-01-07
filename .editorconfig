@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CS0006: No se encontró el archivo de metadatos 'D:\JORGE\TRABAJO\Distriser\DistriserFE\PlanillajeColectivos.DTO\bin\Debug\PlanillajeColectivos.DTO.dll'
+dotnet_diagnostic.CS0006.severity = warning

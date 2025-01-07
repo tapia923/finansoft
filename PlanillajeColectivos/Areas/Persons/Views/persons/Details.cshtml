@@ -1,0 +1,98 @@
+﻿@model PlanillajeColectivos.DTO.Products.persons
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>persons</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.tipeId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.tipeId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.name)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.name)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.nit)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.nit)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.direccion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.direccion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.celular)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.celular)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.telefono)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.telefono)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.email)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.email)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.cupocredito)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.cupocredito)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.regime)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.regime)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

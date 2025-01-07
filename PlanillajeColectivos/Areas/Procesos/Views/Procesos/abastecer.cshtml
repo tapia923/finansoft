@@ -1,0 +1,420 @@
+﻿@model IEnumerable<PlanillajeColectivos.DTO.Products.products>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "ABASTECER";
+}
+
+<link href="~/Content/css/chosen.css" rel="stylesheet" />
+<script src="~/Scripts/sweetalert2@9.js"></script>
+    
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-responsive table-bordered" border="1" cellpadding="0">
+                    <thead id="headamorti" class="thead-inverse">
+                        <tr>
+                            <th width="2%">No INTERNO</th>
+                            <th width="2%">#</th>
+                            <th>CANTIDAD</th>
+                            <th>REFERENCIA</th>
+                            <th>NOMBRE</th>
+                            <th>PRECIO UNITARIO</th>
+                            <th>SUB TOTAL</th>
+                            <th>DESCUENTO</th>
+                            <th>IVA</th>
+                            <th>TOTAL</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaPedido"></tbody>
+                </table>
+
+                <div class="row">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-2">
+                        <h3>TOTAL</h3>
+                    </div>
+                    <div class="col-md-2">
+                        <input id="valorTotal" readonly type="text" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<hr />
+
+<div class="card">
+    <div class="card-header">
+        DATOS DE LA FACTURA
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 col-xs-12 col-lg-3">
+                <div class="form-group">
+                    <label>No FACTURA FISICA:</label>
+                    <input type="text" class="form-control" id="facturaFisica" autocomplete="off" />
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12 col-lg-3">
+                <div class="form-group">
+                    <label>PROVEEDOR:</label>
+                    @Html.DropDownList("providers", null, new { @class = "chosen-select-single", @id = "provider" })
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12 col-lg-3">
+                <div class="form-group">
+                    <label>FORMA DE PAGO:</label>
+                    @Html.DropDownList("ListFormasPago", null, new { @class = "form-control", @id = "FormaPago" })
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-auto">
+                <button id="btnTerminarFactura" class="btn btn-xs btn-success">FINALIZAR ABASTECIMIENTO</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<table id="myTable" class="table table-striped table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.barcode)
+            </th>
+            <th width="30%">
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th width="10%">
+                Precio de Entrada
+            </th>
+            <th>
+                En Inventario
+            </th>
+            <th>
+                IVA
+            </th>
+            <th>
+                IVA Actual
+            </th>
+            <th width="5%">
+                Cantidad
+            </th>
+            <th>Opción Descuento</th>
+            <th width="10%">Descuento</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="tablaProductos">
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.barcode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                <input type="text" name="@item.id" class="nuevoPrecioClass form-control" value="@item.priceIn" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.initialQuantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ivaFK.name)
+            </td>
+            <td>
+                @Html.DropDownList("ListIva", null, "Actual", new { @class = "form-control", @id = "IVA"+item.id })
+            </td>
+            <td>
+                <input type="text" class="form-control" id="@item.id" />
+            </td>
+            <td>
+                <select class="form-control SelectDescuento" id="@("SD"+item.id)">
+                    <option value="1">Valor</option>
+                    <option value="2">Porcentaje</option>
+                </select>
+            </td>
+            <td>
+                <input class="form-control miles VD" type="text" name="@("VD"+item.id)" id="@("VD"+item.id)" value="0" />
+            </td>
+            <td>
+                <button class="classBtnAgregar btn btn-success" id="@item.id">Agregar</button>
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts
+{
+
+    <script>
+        $("#btnTerminarFactura").click(function () {
+            $("#btnTerminarFactura").prop("disabled", true);
+            var total = $("#valorTotal").val();
+            var provider = $("#provider").val();
+            var facturaFisica = $("#facturaFisica").val();
+            var formaPago = $("#FormaPago").val();
+            
+            var siHayProductos = $('td:nth-child(1)', "#tablaPedido").text();
+         
+            if (siHayProductos != "") {
+                if (provider != "0") {
+                    if (facturaFisica != "") {
+                        total = total.replace(".", "");
+                        total = total.replace(".", "");
+                        total = total.replace(",", "");
+                        total = total.replace(",", "");
+                        Swal.fire({
+                            title: 'Terminar Factura?',
+                            icon: 'question',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'SI'
+                        }).then((result) => {
+                            if (result.value) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "@Url.Action("terminarAbastecimiento", "Procesos")",
+                                    datatype: "Json",
+                                    data: { total: total, provider: provider, facturaFisica: facturaFisica,IdFormaPago: formaPago },
+                                    success: function (data) {
+                                        if (data.status) {
+
+                                            Swal.fire({
+                                                title: 'Abastecimiento Realizado Correctamente!',
+                                                icon: 'success',
+                                                confirmButtonColor: '#3085d6',
+                                                confirmButtonText: 'Ok'
+
+                                            }).then((result) => {
+                                                if (result.value) {
+                                                    location.reload();
+                                                };
+                                            });
+
+                                        } else {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Oops...',
+                                                text: 'Error al Realizar Factura!'
+                                            });
+                                            $("#btnTerminarFactura").prop("disabled", false);
+                                        }
+                                    }
+                                });
+                            } else {
+                                $("#btnTerminarFactura").prop("disabled", false);
+                            };
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Ingrese Numero de Factura Fisica'
+                        })
+                        $("#btnTerminarFactura").prop("disabled", false);  
+                    }
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Seleccione un Proveedor'
+                    })
+                    $("#btnTerminarFactura").prop("disabled", false);               
+                }            
+            } else {
+                $("#btnTerminarFactura").prop("disabled", false);
+            }
+            
+        });
+
+        $(document).ready(function () {
+
+            renderTabla();
+
+            $('#myTable').DataTable({
+                "language": {
+                    "url": "/Content/Spanish.json"
+                }
+            });
+
+            $("#tablaProductos").on('click', 'button.classBtnAgregar', function () {
+                var id = $(this).attr("id");//id del producto
+                var valInput = $("#" + id).val();//Cantidad Pedida
+
+                
+                var OpcionDescuento =  $("#SD"+id).val();
+                var VD = $("#VD" + id).val();
+                var NuevoIva = $("#IVA" + id).val();
+                
+               
+                var nuevoPrecio = $("input[name=" + id + "]").val();//Cantidad Pedida
+                if (nuevoPrecio == "") {
+                    nuevoPrecio = "0";
+                }
+
+                if (valInput > 0 && nuevoPrecio != 0) {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("AddProductoAbastecer", "Procesos")",
+                        datatype: "Json",
+                        data: { id: id, cantidad: valInput, nuevoPrecio:nuevoPrecio, OD:OpcionDescuento,VD:VD,IvaId:NuevoIva },
+                        success: function (data) {
+                            if (data == 1) {
+                                renderTabla();
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Ok',
+                                    text: 'Producto Agregado!'
+                                })
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        $("#tablaPedido").on('click', 'button.borrar', function () {
+            var id = $(this).parents('tr');
+            var cId = $('td:nth-child(1)', id).text();
+
+            Swal.fire({
+                title: 'Quitar Producto?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'SI'
+            }).then((result) => {
+                if (result.value) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DeleteProductoContado", "Procesos")",
+                    datatype: "Json",
+                    data: { id: cId },//solo para enviar datos
+                    success: function (data) {
+                        Swal.fire(
+                            'Eliminado!',
+                            '',
+                            'success'
+                        )
+                        renderTabla();
+                    }
+                });
+                };
+            });
+        });
+
+
+        function renderTabla() {
+            $("#tablaPedido").empty();
+
+            $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("getAbasteciendo", "Procesos")",
+                    datatype: "Json",
+                    success: function (data) {
+                        data = JSON.parse(data);
+                        var total = 0;
+                        $.each(data, function (key, val) {
+
+                            total = total + val.total;
+
+                            var tr = '<tr>';
+                            tr += '<td>' + val.operatioId + '</td>';
+                            tr += '<td>' + (key + 1) + '</td>';
+                            tr += '<td>' + val.cantidad + '</td>';
+                            tr += '<td>' + val.codigoBarras + '</td>';
+                            tr += '<td>' + val.nombre + '</td>';
+                            tr += '<td>' + val.unidad + '</td>';
+                            tr += '<td>' + val.subtotal + '</td>';
+                            tr += '<td>' + val.descuento + '</td>';
+                            tr += '<td>' + val.iva + '</td>';
+                            tr += '<td>' + val.total + '</td>';
+                            tr += '<td><button class="borrar btn btn-danger btn-xs" id="' + val.operatioId + '">X</button></td>';
+                            tr += '</tr>';
+                            $('#tablaPedido').append(tr);
+                        });
+                        total = parseInt(total);
+                        $("#valorTotal").val(formatNumberMiles.new(total));
+                    }
+            });
+        }
+
+        $(document).ready(function () {
+            $(".chosen-select-single").chosen();
+            $(".chosen-select-multiple").chosen();    //DESPUES DEL FINAL DEL DOCUMENTO AL PRINCIPIO DE LOS SCRIPTS
+        });
+
+        $(".miles").on({
+            "focus": function (event) {
+                $(event.target).select();
+            },
+            "keyup": function (event) {
+                $(event.target).val(function (index, value) {
+                    return value.replace(/\D/g, "")
+                        .replace(/([0-9])([0-9]{3})$/, '$1.$2')
+                        .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+                });
+            }
+        });
+
+        $(".VD").change(function () {
+            var valor = $(this).val();
+            if (valor != "") {
+                var Id = $(this).attr("id");
+                Id = Id.substr(2);
+                var Opcion = parseInt($("#SD" + Id).val());
+                if (Opcion == 2) {
+                    valor = valor.split('.').join("");
+                    valor = parseInt(valor);
+                    if (valor < 0) {
+                        $(this).val("0");
+                    } else if (valor > 100) {
+                        $(this).val("100");
+                    }
+                }//fin if opcion
+            } else {
+                var valor = $(this).val("0");
+            }
+        });//fin change .VD
+
+        $(".SelectDescuento").change(function () {
+            var Id = $(this).attr("id");
+            Id = Id.substr(2);
+            $("#VD"+Id).val("0");
+            
+        });//fin change .VD
+
+        //FORMATEAR UN NUMERO
+        var formatNumberMiles = {
+            separador: ".", // separador para los miles
+            sepDecimal: ',', // separador para los decimales
+            formatear: function (num) {
+                num += '';
+                var splitStr = num.split('.');
+                var splitLeft = splitStr[0];
+                var splitRight = splitStr.length > 1 ? this.sepDecimal + splitStr[1] : '';
+                var regx = /(\d+)(\d{3})/;
+                while (regx.test(splitLeft)) {
+                    splitLeft = splitLeft.replace(regx, '$1' + this.separador + '$2');
+                }
+                return this.simbol + splitLeft + splitRight;
+            },
+            new: function (num, simbol) {
+                this.simbol = simbol || '';
+                return this.formatear(num);
+            }
+        }
+
+    </script>
+        }

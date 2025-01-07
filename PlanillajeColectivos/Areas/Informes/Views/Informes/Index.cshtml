@@ -1,0 +1,224 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link href="~/Content/css/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/css/chosen.css" rel="stylesheet" />
+<script src="~/Scripts/sweetalert2@9.js"></script>
+<script src="~/Scripts/Informes.js"></script>
+@*@section Styles{
+
+        <link href="~/Content/css/jquery-ui.min.css" rel="stylesheet" />
+        <link href="~/Content/css/chosen.css" rel="stylesheet" />
+        <script src="~/Scripts/sweetalert2@9.js"></script>
+        <style>
+            fieldset {
+                min-width: 12px;
+                padding: 12px;
+                margin: 100px;
+                border: 1px solid #F1F1F1;
+            }
+
+            legend {
+                width: 25%;
+                padding: 0;
+                margin-bottom: 0px;
+                font-size: 14px;
+                line-height: inherit;
+                color: #0026ff;
+                border: 0;
+                border-bottom: none;
+            }
+
+            ul.ui-autocomplete {
+                max-height: 200px;
+                max-width: 400px;
+                overflow-y: auto; /* prevent horizontal scrollbar */
+                overflow-x: hidden; /* add padding to account for vertical scrollbar */
+                z-index: 5000;
+            }
+        </style>
+    }*@
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="menu" class="col-md-4" style="margin-top: 0%; ">
+        <div class="col-md-12 tituloinformes">INFORMES</div>
+        <ul>
+            <li><a href="#" data-toggle="modal" data-target="#librosaux" data-informe="1"><i class="fa fa-list-alt" aria-hidden="true"></i> Balance De Comprobación</i> </a></li>
+            <li><a href="#" data-toggle="modal" data-target="#librosaux" data-informe="2"><i class="fa fa-list-alt" aria-hidden="true"></i> Estado De Resultados</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#librosaux" data-informe="3"><i class="fa fa-list-alt" aria-hidden="true"></i> Balance General</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#librosaux" data-informe="4"><i class="fa fa-list-alt" aria-hidden="true"></i> Facturación</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#librosaux" data-informe="5"><i class="fa fa-list-alt" aria-hidden="true"></i> Abastecimientos</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#librosaux" data-informe="6"><i class="fa fa-list-alt" aria-hidden="true"></i> Libro Auxiliar</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#librosaux" data-informe="7"><i class="fa fa-list-alt" aria-hidden="true"></i> Auxiliar por Terceros Detallado</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#librosaux" data-informe="8"><i class="fa fa-list-alt" aria-hidden="true"></i> Auxiliar por Cuenta</a></li>
+            <li><a href="/Contabilidad/Reportes/ComprobanteInformeDiario"><i class="fa fa-list-alt" aria-hidden="true"></i> Comprobante Informe Diario</a></li>
+            <li><a href="/Contabilidad/Reportes/InformeInventarios"><i class="fa fa-list-alt" aria-hidden="true"></i>Informe Inventarios</a></li>
+
+        </ul>
+    </div>
+
+
+    @using (Html.BeginForm("Excel", "Informes"))
+    {
+        @Html.ValidationSummary(false)
+        <div class="modal fade" data-backdrop="static" id="librosaux" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modalinformestiulo">
+                        <i class="fa fa-book" id="title" aria-hidden="true"></i>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="informe" name="informe" />
+                        <div class="col-md-10">
+                            <div id="table1">
+                                <table class="table">
+                                    <thead>
+                                        <tr><th colspan="3"><h5>PERIODO A REPORTAR</h5></th></tr>
+                                        <tr><th>Año</th><th id="tfrom">Hasta / Mes</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                @Html.DropDownList("anio", (IEnumerable<SelectListItem>)ViewBag.anio, null, new { @class = "form-control", @id = "year", @name = "year" })
+                                            </td>
+                                            <td>
+                                                @Html.DropDownList("mes", (IEnumerable<SelectListItem>)ViewBag.mes, null, new { @class = "form-control", @id = "mes", @name = "mes" })
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div id="table2">
+                                <table class="table">
+                                    <thead>
+                                        <tr><th colspan="3"><h5>PERIODO A REPORTAR</h5></th></tr>
+                                        <tr><th>Desde</th><th id="tfrom">Hasta</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input type="date" class="form-control" name="fechDesde" id="fechDesde" />
+                                            </td>
+                                            <td>
+                                                <input type="date" class="form-control" name="fechHasta" id="fechHasta" />
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="table3">
+                                <table class="table">
+                                    <thead>
+                                        <tr><th colspan="3"><h5>PERIODO A REPORTAR</h5></th></tr>
+                                        <tr><th>Fecha</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input type="date" class="form-control" name="FechaActual" id="FechaActual" />
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div>
+                                <div class="row" style="margin-left:20px" id="count">
+
+                                    <div class="form-group">
+                                        <label>CUENTA</label>
+                                        <div class="col-10">
+                                            @Html.DropDownList("cuenta", (IEnumerable<SelectListItem>)ViewBag.cuentas, null, new { @class = "chosen-select-single", @id = "cuenta", @name = "cuenta" })
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div>
+                                <div class="row" style="margin-left:20px" id="level">
+                                    <div class="form-group">
+                                        <label>NIVEL</label>
+                                        <div class="col-10">
+                                            @Html.DropDownList("nivel", (IEnumerable<SelectListItem>)ViewBag.niveles, null, new { @class = "form-control", @id = "nivel", @name = "nivel" })
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="clearfix"></div>
+                                        <div id="niveles2" style="margin-top:5px">
+                                            <label class="col-md-3">Nivel</label>
+                                            <div class="col-md-3" style="width:150px;">
+                                                @Html.DropDownList("nivel2", (IEnumerable<SelectListItem>)ViewBag.niveles2, null, new { @class = "form-control", @id = "nivel2", @name = "nivel2" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <div class="clearfix"></div>
+                                        <div id="chkTerceros">
+                                            <label class="col-md-3">Terceros</label>
+                                            <div class="col-md-3">
+                                                <input class="form-control" style="width:25px;height:25px" type="checkbox" name="chkTercero" id="chkTercero" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div id="costos" style="margin-top:5px">
+                                    <div class="col-md-3" style="width:150px;">
+                                        @Html.DropDownList("costo", (IEnumerable<SelectListItem>)ViewBag.CentroCostos, null, new { @class = "chosen-select-single", @id = "costo", @name = "costo" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <div class="modal-footer">
+                            @*<a href="#" title="Imprimir"><i class="fa fa-print imprimirinforme" aria-hidden="true"></i></a>|*@
+                            <button type="submit" style="background:none; padding:0px; border:none">
+                                <i class="fa fa-print excelinforme">DESCARGAR</i>
+                            </button>
+                            @*<a href='@Url.Action("ExcelSaldos", "Informes")' title="Excel" onsubmit=""><i class="fa fa-file-excel-o excelinforme" aria-hidden="true"></i></a>|*@
+                            @*<a href="#" title="Salir" data-dismiss="modal"><i class="fa fa-accusoft salirinforme" aria-hidden="true"></i></a>*@
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</body>
+</html>
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $(".chosen-select-single").chosen();
+            $(".chosen-select-multiple").chosen();
+        });
+
+    </script>
+
+
+}
