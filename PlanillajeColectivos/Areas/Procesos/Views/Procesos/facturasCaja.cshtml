@@ -20,27 +20,28 @@
     </nav>
 
     <br />
-    <div class="tab-content">
-        @*<div class="row" style="margin-top:0.5%;margin-left:auto;margin-right:auto">
-                <div class="col-lg-offset-10 col-lg-2 col-sm-12">
-                    <a href="/../SIAR/Index"><i class="fa fa-arrow-circle-left fa-lg" aria-hidden="true">Salir al menú</i></a>
-                </div>
+    <div class="tab-content" style="display: flex; justify-content: center;">
 
-            </div>*@
-        <table id="myTable" class="table table-striped table-bordered table-responsive">
+        <table id="myTable" class="table table-striped table-bordered table-responsive" >
             <thead>
                 <tr>
                     @*<th>
-                            #
-                        </th>*@
+        #
+        </th>*@
                     <th>
+                        NUMERO
+                    </th>
+                    <th style="width: 300px;">
                         CLIENTE
                     </th>
-                    <th>
+                    <th style="width: 250px;">
                         VENDEDOR
                     </th>
-                    <th>
+                    <th style="width: 100px;">
                         FECHA
+                    </th>
+                    <th>
+                        HORA
                     </th>
                     <th>
                         TIPO
@@ -56,8 +57,11 @@
                 {
                     <tr>
                         @*<td>
-                                @Html.DisplayFor(modelItem => item.id)
-                            </td>*@
+            @Html.DisplayFor(modelItem => item.id)
+        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.numeroFactura)
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.persons.name)
                         </td>
@@ -65,7 +69,10 @@
                             @Html.DisplayFor(modelItem => item.usersTabla.nombre) @Html.DisplayFor(modelItem => item.usersTabla.apellido)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.date)
+                            @String.Format("{0:yyyy-MM-dd}", item.date)
+                        </td>
+                        <td>
+                            @String.Format("{0:HH:mm:ss}", item.date)
                         </td>
                         <td>
                             @{
@@ -79,11 +86,11 @@
                                 }
                             }
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.total)
+                        <td style="text-align:right;">
+                            $@String.Format("{0:N0}", item.total)
                         </td>
                         <td>
-                            @Html.ActionLink("VER", "verFacturaCaja", new { id = item.id }) |
+                            @Html.ActionLink("VER", "verFacturaCaja", new { id = item.id })
                         </td>
                     </tr>
                 }

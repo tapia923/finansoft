@@ -1,0 +1,280 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Imprimir</title>
+
+    <style type="text/css">
+        .numeros {
+            font-size: 19px;
+        }
+
+        table {
+            vertical-align: top;
+            border: 1px solid black;
+            padding-bottom: 5px;
+        }
+
+        tr {
+            vertical-align: top;
+        }
+
+        td {
+            vertical-align: top;
+        }
+
+        .midnight-blue {
+            background: #2c3e50;
+            padding: 4px 4px 4px;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .silver {
+            /*background: white;*/
+            padding: 3px 4px 3px;
+        }
+
+        .clouds {
+            /*background: #ecf0f1;*/
+            padding: 3px 4px 3px;
+        }
+
+        .border-top {
+            border-top: solid 1px #bdc3c7;
+        }
+
+        .border-left {
+            border-left: solid 1px #bdc3c7;
+        }
+
+        .border-right {
+            border-right: solid 1px #bdc3c7;
+        }
+
+        .border-bottom {
+            border-bottom: solid 1px #bdc3c7;
+        }
+
+        table.page_footer {
+            width: 100%;
+            border: none;
+            background-color: white;
+            padding: 2mm;
+            border-collapse: collapse;
+            border: none;
+        }
+
+        tr.border_bottom td,
+        th {
+            border-bottom: 1pt solid black;
+            /*border-top: 1pt solid black;*/
+            font-weight: bold;
+            /*background: black;
+        color: white;*/
+        }
+
+        td,
+        th {
+            padding-top: 5px;
+        }
+    </style>
+
+</head>
+<body>
+
+    @model IEnumerable<PlanillajeColectivos.DTO.Products.pedidosViewModel2>
+
+    <page backtop="2mm" backbottom="2mm" backleft="0mm" backright="129mm" style="font-size: 10pt; font-family: arial">
+        <table cellspacing="0" style="width: 100%; border: none;">
+            <tr>
+                <td color: #444444;">
+                    <img style="width: 30%;" src="~/Content/img/logoEmpresa.png" />
+                </td>
+                <td>
+                    <div>
+                        <span style="font-size:20px;font-weight:bold">No. C-@ViewBag.numeroFactura</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100%; font-size:12px;text-align:center">
+                    <span style="font-size:20px;font-weight:bold">SUPERMERCADO SUPER COSECHA</span>
+                    <div class="numeros">
+                        <br>CARRERA 5ta #22 - 27 B/San Vicente<br>
+                        Ipiales - Nariño<br>
+                        Teléfono: 3024520920<br>
+                        supercosecha@hotmail.com<br>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+            <tr class="border_bottom">
+                <td colspan="2" style="width:100%;">ADQUIRIENTE</td>
+            </tr>
+            <tr>
+                <td><b>N° Identificacion</b></td>
+                <td>@ViewBag.identificacion</td>
+            </tr>
+            <tr>
+                <td><b>Nombre</b></td>
+                <td>@ViewBag.cliente</td>
+            </tr>
+
+            <tr>
+                <td><b>Dirección</b></td>
+                <td>@ViewBag.direccion</td>
+            </tr>
+            <tr>
+                <td><b>Teléfono</b></td>
+                <td>@ViewBag.celular</td>
+                </t
+        </table>
+
+        <br>
+        <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+            <tr class="border_bottom">
+                <td style="width:30%;">VENDEDOR</td>
+                <td style="width:20%;">FECHA</td>
+            </tr>
+            <tr>
+                <td>
+                    @ViewBag.vendedor
+                </td>
+                <td>@ViewBag.fecha</td>
+            </tr>
+        </table>
+        <br>
+
+        <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+            <tr class="border_bottom">
+                <th style="width: 5%;text-align:center">COD</th>
+                <th style="width: 5%;text-align:center">CAN.</th>
+                <th style="width: 55%">DESCRIPCION</th>
+                <th style="width: 15%;text-align: right">PRECIO UNIT.</th>
+                <th style="width: 5%;text-align: right">IVA</th>
+                <th style="width: 15%;text-align: right">VR TOTAL</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="width: 5px; text-align:center">@item.cod</td>
+                    <td style="width: 5px; text-align:center">@item.cantidad</td>
+                    <td style="width: 55px;">@item.nombre</td>
+                    <td style="width: 15px; text-align: right">@item.unidad</td>
+                    <td style="width: 5px; text-align: right">@item.iva</td>
+                    <td style="width: 15px; text-align: right">@item.total</td>
+                </tr>
+            }
+
+        </table>
+        <br>
+        <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+            <tr class="border_bottom">
+                <td colspan="2" style="width:100%;">DETALLE DEL IVA</td>
+            </tr>
+            <tr>
+                <td><b>Valor Total Excentos:</b></td>
+                <td>@ViewBag.valorTotalExcentos</td>
+            </tr>
+            <tr>
+                <td><b>Valor Total Excluidos:</b></td>
+                <td>@ViewBag.valorTotalExcluidos</td>
+            </tr>
+
+            <tr>
+                <td><b>Base IVA 19%:</b></td>
+                <td>@ViewBag.baseIVA19</td>
+            </tr>
+            <tr>
+                <td><b>Valor IVA 19%:</b></td>
+                <td>@ViewBag.valorIVA19</td>
+            </tr>
+            <tr>
+                <td><b>Base IVA 5%:</b></td>
+                <td>@ViewBag.baseIVA5</td>
+            </tr>
+            <tr>
+                <td><b>Valor IVA 5%:</b></td>
+                <td>@ViewBag.valorIVA5</td>
+            </tr>
+            <tr>
+                <td><b>INC a las bolsas:</b></td>
+                <td>@ViewBag.totalBolsas</td>
+            </tr>
+        </table>
+        <br />
+        <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+            <tr class="border_bottom">
+                <td colspan="2" style="width:100%;">FORMA DE PAGO</td>
+            </tr>
+            <tr>
+                <td><b>Valor Total:</b></td>
+                <td>@ViewBag.total</td>
+            </tr>
+            <tr>
+                <td><b>Credito:</b></td>
+                <td>Fecha Limite de Pago: @ViewBag.fechaPago</td>
+            </tr>
+        </table>
+        <br />
+
+        @if (ViewBag.beneficio == 1)
+        {
+            <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+                <tr class="border_bottom">
+                    <td colspan="2" style="width:100%;">INFORMACION DE LOS BENEFICIOS</td>
+                </tr>
+                <tr>
+                    <td><b>SUBSIDIO POR ESTA COMPRA</b></td>
+                    <td>@ViewBag.valorConvenio</td>
+                </tr>
+                @*else
+                {
+                    <tr>
+                        <td><b>CASHBACK POR ESTA COMPRA</b></td>
+                        <td>@ViewBag.valorConvenio</td>
+                    </tr>
+                }*@
+
+            </table>
+            <br />
+        }
+
+        <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+            <tr class="border_bottom">
+                <td colspan="2" style="width:100%;">DATOS DEL EMISOR Y AUTORIZACION DE FACTURA</td>
+            </tr>
+            <tr>
+                <td>Factura emitida por CI SUPERCOSECHA SAS ZOMAC NIT. 901.344.066-0 – Responsable de IVA – No somos grandes contribuyentes – no somos autorretenedores – Agentes de retención impuesto de renta – Agentes de retención ICA – Actividad Económica principal 4711 – Autorización de facturación No. 18763004724621 emitida el 29-02-2020 autoriza numeración desde P 1 hasta P 5000, vigencia 24 meses</td>
+            </tr>
+        </table>
+        <br />
+        <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+            <tr class="border_bottom">
+                <td colspan="2" style="width:100%;">FACTURA ELABORADA POR</td>
+            </tr>
+            <tr>
+                <td>FinanSoft Facturacion - FinanSoft</td>
+            </tr>
+        </table>
+        <br />
+        <div style="font-size:11pt;text-align:left;font-weight:bold">Gracias por su compra!</div>
+    </page>
+</body>
+</html>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+
+
+
+

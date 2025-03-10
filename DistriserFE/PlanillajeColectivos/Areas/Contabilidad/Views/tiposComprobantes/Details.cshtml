@@ -1,0 +1,58 @@
+﻿@model PlanillajeColectivos.DTO.Contabilidad.tipoComprobante
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>tipoComprobante</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.codigo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.codigo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.claseComprobante)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.claseComprobante)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.nombre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.nombre)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.consecutivo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.consecutivo)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

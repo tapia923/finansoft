@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Model.Custom.UserGrid>
+
+@{
+    ViewBag.Title = "listado";
+}
+
+<h2>Usuarios</h2>
+
+<table>
+    <tbody>
+        @foreach (var m in Model)
+        {
+            <tr>
+                <td>
+                    <a href="~/user/get/@m.Id">
+                        @m.nombre
+                    </a>
+                </td>
+                <td>@m.apellido</td>
+                <td>@m.Email</td>
+                <td> @m.Role</td>
+            </tr>
+        }
+
+    </tbody>
+
+
+</table>
+
+
+
+
+

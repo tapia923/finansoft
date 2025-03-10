@@ -1,0 +1,223 @@
+﻿ body
+  {
+     margin: 0;
+     background-color: #DDDDDD;
+     overflow: auto;
+  }
+
+
+   #btn1 {
+            background: #2B7785;
+            height: 135px;
+            width: 100%;           
+            cursor: pointer;
+            color: #FFF;
+            font-size: 25px;
+            font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+            padding-left: 10px;
+            text-align: center;
+            top: 12% !important;
+            margin-top:5%;
+        }
+
+
+   #btn1:hover
+   {
+       background:#009688;
+   }
+     #btn2 {
+            background: #00B8D4;
+            height: 135px;
+            width: 100%;         
+            cursor: pointer;
+            color: #FFF;
+            font-size: 25px;
+            font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+            padding-left: 10px;
+            text-align: center;
+            top: 12% !important;
+            margin-top:5%;
+        }
+
+      #btn2:hover
+   {
+       background:#29B6F6;
+   }
+
+        #btn3 {
+            background: #892E65;
+            border-color: #892E65;
+            height: 135px;
+            width: 100%;        
+            cursor: pointer;
+            color: #FFF;
+            font-size: 25px;
+            font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+            padding-left: 10px;
+            text-align: center;
+            top: 15% !important;
+            margin-top:5%;
+        }
+          #btn3:hover
+   {
+       background:#880E4F;
+   }
+        
+
+        #btn4 {
+            background: #509601;
+            border-color: #509601;
+            height: 135px;
+            width: 100%;         
+            cursor: pointer;
+            color: #FFF;
+            font-size: 25px;
+            font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+            padding-left: 10px;
+            text-align: center;
+            top: 15% !important;
+            margin-top:5%;
+        }
+
+    #btn4:hover
+   {
+       background:#7CB342;
+   }
+
+#btn5 {
+    background: #c2185b;
+    border-color: #c2185b;
+    height: 135px;
+    width: 100%;
+    cursor: pointer;
+    color: #FFF;
+    font-size: 25px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    padding-left: 10px;
+    text-align: center;
+    top: 15% !important;
+    margin-top: 5%;
+}
+
+    #btn5:hover {
+        background: #C24D87;
+    }
+        
+
+        #content {
+            
+            position: relative;
+            top: 900px;
+            z-index: 0;
+            width: 100% !important;
+            height: 430px !important;
+        }
+
+        #backbutton {
+            cursor: pointer;
+            margin-top:-4px;
+        }
+
+        #caption {
+            position: relative;
+            margin-top: 0px;
+            top: 0px;
+            color: #FFF;
+            font-size: 25px;
+            font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        }
+        .titulo-caption
+        {
+            display:none;
+        }
+
+        #pagecaption {
+            position: relative;
+            top: -60px;
+            color: #FFF;
+            font-size: 25px;
+            font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        }
+
+        #caption
+        {
+            height:44px !important;
+            margin-top:7px;
+            float:left;
+            margin-left: 0px;
+        }
+
+        #backbutton
+       {
+         height:44px; 
+         width:44px; 
+         margin-top:7px; 
+         float:left;          
+         margin-left: 20px;
+       }
+
+        #pagecaption
+        {
+            height:44px; 
+            margin-top:7px;
+            float:left; 
+            margin-left:12px; 
+            position:absolute;
+        }
+
+        .iconosmenu {
+              font-size: 43px !important;
+              margin-top: 6% !important;
+        }
+
+        .container
+        {
+            width:100% !important;
+        }
+
+        .divcontenedor
+        {
+               width: 100%;
+    height: 35px;
+    background-color: #26A69A;
+
+        }
+        .headerCenter {
+    position: relative;
+    max-width: 900px;
+    padding: 0 15px 0 15px;
+    margin: 0 auto 7px auto;
+    overflow: hidden;
+}
+       
+        .divcontenedorpeque
+        {
+         width:110%; 
+         height:57px; 
+         margin-top: 2%; 
+         margin-left: -5%; 
+         margin: 0 auto; 
+         overflow:hidden; 
+         position:relative;
+        }
+
+        .divframe
+        {
+           width: 111%;
+            height: 650px;
+            overflow: hidden;
+            margin: 0 auto;
+            position: relative;
+            margin-top: 35px;
+            margin-left: -5%;
+        }
+
+        .divmenu
+        {
+           width:100% !important; 
+           height:499px; 
+           overflow:hidden; 
+           margin: 0 auto; 
+           position:absolute !important; 
+           top:15%;
+        }

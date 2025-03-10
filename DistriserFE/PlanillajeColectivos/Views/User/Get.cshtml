@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Get";
+}
+
+<h3 class="page-header">Roles</h3>
+
+@using (Html.BeginForm("AddRoleToUser", "User", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+    <div class="form-control">
+        <label>Roles</label>
+        <select name="role" class="form-control">
+            @foreach (var r in roles)
+            {
+                <option value="@r.Id">r.nombre</option>  
+            }
+            
+        </select>
+    </div>
+    <button type="submit" class="btn btn-default">Agregar</button>
+}
+

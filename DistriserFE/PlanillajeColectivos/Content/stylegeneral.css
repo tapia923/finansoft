@@ -1,0 +1,692 @@
+﻿
+/**Estilos panel nota de contabliliad*/
+
+.divdetallesnota {
+    border: 1px solid #00838F;
+}
+
+    .divdetallesnota h3 {
+        background-color: #00838F;
+        padding: 1.5%;
+        color: #FFF;
+    }
+
+.panelnota {
+       position: absolute !important;
+    margin-top: 6% !important;
+    width: 100% !important;
+    left: 0;
+
+}
+
+    .panelnota h3 {
+        text-align: center;
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+.panelnuevo {
+    position: initial !important;
+    margin-top: 6% !important;
+    border: 1px solid cadetblue !important;
+}
+
+.panelnuevo h3 {
+        text-align: center;
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+
+.panelcuentas {
+    position: initial !important;
+    margin-top: 6% !important;
+    border: 1px solid #509601 !important;
+    height:266px !important;
+    overflow-y:auto !important;
+}
+
+.panelcuentas h3 {
+        text-align: center;
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+.modalheadercuentas {
+    background-color: #00897B !important;    
+        color: #FFF !important;
+        font-size: 23px !important;
+        padding:10px;
+}
+
+
+
+.panelnotatitulo {
+    color: #FFF !important;
+    background-color: #274766 !important;
+    border-color: #dddddd !important;
+    text-align: center;
+    font-size: 17px;
+    margin-bottom: 5%;
+}
+
+
+
+
+/*Estilo tablas*/
+
+
+.columnatablaazul {
+    background-color: #5D7A8D;
+    color: #FFF;
+    text-align: center !important;
+}
+
+
+.columnatablaazul2 {
+    background-color: #336D81;
+    text-align: center !important;
+    color: #FFF;
+}
+
+
+
+.headercrematablas {
+    background-color: #FFF9C4;
+    color: #000;
+}
+
+
+.tablaterceros th {
+    background-color: #E0E0E0 !important;
+    font-weight: 300 !important;
+    border: 1px solid #9E9E9E !important;
+}
+
+.titulostablas
+{
+    background-color: #FFF9C4;
+    padding: 1%;
+}
+
+.btn_disabled
+{
+    pointer-events: none;
+}
+
+
+
+/**Estilo botones*/
+
+.botonagregar {
+    color: #ffffff;
+    background-color: #26A69A;
+    border-color: #4cae4c;
+}
+
+    .botonagregar:hover {
+        background-color: #00897B;
+        color: #FFF;
+    }
+
+.botoneliminar {
+    color: #ffffff;
+    background-color: #E57373;
+    border-color: #d43f3a;
+}
+
+    .botoneliminar:hover {
+        background-color: #D2322D;
+    }
+
+
+.botonsalirmodal {
+    background-color: #EF6C00 !important;
+    color: #FFF !important;
+    font-weight: bold !important;
+    font-size: 17px;
+     padding: 1% !important;
+    border-radius: 5px !important;
+}
+
+.botonsalirmodal:hover
+{
+    background-color:#E65100;
+}
+
+.botonguardar
+{
+     background-color: #8BC34A !important;
+    color: #FFF !important;
+    font-weight: bold !important;    
+    padding: 1% !important;
+  
+}
+
+.botonguardar:hover
+{
+    background-color:#689F38 !important;
+}
+
+
+.botoncancelar
+{
+    background-color: #FB8C00 !important;
+    color: #FFF !important;
+    font-weight: bold !important;
+    font-size: 17px !important;
+    padding: 1% !important;
+    border-radius: 5px !important;
+    width:100%!important;
+}
+
+.botoncancelar:hover
+{
+    background-color:#EF6C00 !important;
+}
+
+
+.botonadicionarforma
+{
+    background-color: #448AFF !important;
+    color: #FFF !important;
+    font-weight: bold !important;
+    font-size: 13px;
+    position: absolute !important;
+    left: 99% !important;
+    top: -1% !important;
+}
+
+
+/**Generales*/
+
+
+.ui-widget-content {
+    background-color: #FFF !important;
+   
+}
+
+    .ui-widget-content li {
+        list-style: none;
+    }
+
+        .ui-widget-content li:hover {
+            background-color: #00BCD4;
+        }
+
+    .letrasizquierda
+    {
+        text-align: right !important;
+    }
+
+    .alinearcentro
+    {
+        text-align:center !important;
+    }
+
+/*Estilo modales*/
+
+/*Modal Azul General*/
+
+
+.modalgeneral{ 
+    width: 83%;
+    left: 9%;
+    margin-top: 14%;
+    border: 2px solid cadetblue;
+}
+
+.modalheadergeneral {
+        background-color: #00ACC1 !important;
+    color: #FFF !important;
+    font-size: 28px !important;
+    padding: 10px;
+    margin-top: -3%;
+    width: 105.3%;
+    margin-left: -2.5%;
+    border-radius: 7px 7px 0px 0px;
+}
+
+.modaledit:before {
+    content: "\f040";
+    font-family: FontAwesome;
+ }
+
+.modalnew:before {
+    content: "\f055";
+    font-family: FontAwesome;
+ }
+
+
+
+  
+.ui-dialog
+    {
+    z-index:2 !important;
+}
+
+.ui-widget-overlay {
+    background: #aaaaaa url("images/ui-bg_flat_0_aaaaaa_40x100.png") 50% 50% repeat-x;
+    opacity: .3;
+    filter: Alpha(Opacity=30);
+}
+.ui-widget-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-content
+{
+    z-index:5000000000000 !important;
+
+}
+.text-box single-line
+{
+    height:35px !important
+
+}
+
+/**Modal Para agregar*/
+
+.modalgeneralagregar {
+    width: 76%;
+    left: 13%;
+    margin-top: 9%;
+    border: 2px solid #8C9EFF;
+}
+
+.modalagregarheader {
+    background-color: #8C9EFF !important;
+}
+
+    .modalagregarheader h4 {
+        color: #FFF;
+    }
+
+    .modalagregarpeq
+    {
+    width: 49% !important;
+    left: 25% !important;
+    margin-top: 14%;
+    border: 2px solid #8C9EFF;
+    }
+
+
+
+/*Botones para tablas*/
+
+.editartablas
+{
+  
+    padding: 3%;
+    border-radius: 5px 5px 5px 5px;
+    color:#009688;
+    text-align:center;
+    font-size: 18px;
+
+}
+
+.editartablas:hover
+{
+    background-color: #00695C !important;
+    color:#FFF;
+    text-decoration:none;
+
+}
+                       
+.detalletablas
+{
+ 
+    padding: 3%;
+    border-radius: 5px 5px 5px 5px;
+    color:#607D8B;
+    text-align:center;
+    font-size: 18px;
+
+}
+
+.detalletablas:hover
+{
+    background-color: #37474F !important;
+     color:#FFF;
+    text-decoration:none;
+}
+
+
+
+.eliminartablas  
+{
+    padding: 3%;
+    border-radius: 5px 5px 5px 5px;
+    color:#D84315;
+    text-align:center;
+    font-size: 18px;
+
+}
+
+.eliminartablas:hover
+{
+     background-color: #BF360C !important;
+     color:#FFF;
+    text-decoration:none;
+}
+
+.subtitulo
+{
+    border-bottom: 5px solid #2B7785 !important;
+    width: 101% !important;
+    color: #2B7785 !important;
+    padding: 15px 20px 15px 0px !important;
+    margin-bottom: 31px !important;
+}
+
+.btn-success, .btn-success:focus {    
+	background-color: #509601!important;
+    border-color: #509601;
+}
+
+
+.btnnuevo
+{
+	border-color: #509601;
+    border: 3px solid #e5e5e5;
+    font-size: 17px;
+    padding: 7px 15px 7px 15px;
+    float:right;
+    margin-top: -10px;
+}
+
+.btnnuevo:before {
+  content: '+ ';
+}
+ 
+  
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #555;
+    cursor: default;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+    background: #892E65;
+    color: #FFF;
+}
+
+.contenedortabs
+{
+    border: 1px solid #892E65 !important;
+    border-radius: 5px;
+    width: 100%;
+    margin: 0 auto !important;
+}
+
+.tabsnota
+{
+    background-color: #DDDDDD;
+    color: #000;
+    border: 1px solid #892E65 !important;
+}
+
+.tabsnota:hover
+{
+    background-color: #892E65 !important;
+    color: #FFF;
+}
+
+.letraspeque
+{
+  font-size: 12px !important;
+}
+
+.panelnuevonota
+{
+    padding: 23px;
+    width: 101%;
+    font-size: 12px;
+}
+
+ li
+
+    {
+        list-style:none !important;
+    }
+
+
+ .tablaspeq
+ {
+    background-color: #FFF !important;
+    width: 94% !important;
+    margin-left: 3% !important;
+ }
+
+ .letrassinpadding
+ {
+     padding-left:0px !important;
+ }
+
+ .barratitulo
+ {
+    border-bottom: 1px solid #999999 !important;
+    margin-bottom: 11px;
+    padding-bottom: 3px;
+
+ }
+
+ /*WIZARD*/
+
+     .wizard-card .choice .icon
+    {
+    text-align: center;
+    vertical-align: middle;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    background-color: #509601;
+    color: #FFFFFF;
+    margin: 0 auto 20px;
+    border: 4px solid #509601;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    }
+
+    .wizard-card .choice i {
+    font-size: 59px;
+    line-height: 63px;
+}
+
+ 
+
+    .btn-cerrartutorial
+    {
+        color:#FFF !important;
+        border:none;
+      
+
+    }
+
+    .titulotutorial
+    {
+       background-color: #00B8D4;
+       color: #FFF;
+       font-size: 22px;
+      
+    }
+
+    .botonvertutorial
+    {
+        animation: 2s tada infinite !important;
+
+    }
+
+    .wizard-card {
+    min-height: 410px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15), 0 0 1px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 10px 0;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+ .wizard-card .nav-pills > li a {
+    border: 0 !important;
+    text-transform: uppercase;
+    background-color: #274766;
+    color: #FFFFFF !important;
+    font-size: 12px;
+}
+
+ .form-control::-webkit-input-placeholder { color: #000 }
+.form-control:-moz-placeholder { color: #000}
+.form-control::-moz-placeholder {color: #000}
+.form-control:-ms-input-placeholder {color: #000}
+
+
+.wizard-card.ct-wizard-orange .nav-pills > li.active a {
+    background-color: #00897B;
+}
+
+
+
+.divtitulocentro
+{
+    padding: 1%;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.divbien
+{
+    background-color: #FFF;
+    padding: 3%;
+    border-radius: 7px;
+    color: #569ED1;
+    font-weight: bold;
+}
+
+.ui-dialog ui-corner-all ui-widget ui-widget-content ui-front no-close ui-draggable
+{
+        top: -765.5px !important;
+}
+
+.titulocatalogos
+{
+    width: 62% !important;
+    margin: 0 auto;
+    text-align: left;
+    margin-top: 2.5%;
+    font-size: 24px;
+    color: #274766;
+
+}
+/**Diseño para recibos Imprimir*/
+
+.concepto
+{
+    margin-top: 2% !important;
+    font-size: 16px;
+    border: 1px solid;
+    margin-bottom: 2%;
+}
+.cheque
+{
+    border: 1px solid;
+    width: 96%;
+    margin-left: 2%;
+    height: 7cm;
+    padding:2%;
+}
+
+.tituloinformes
+{
+    text-align: center;
+    background-color: #009688;
+    color: white;
+    padding: 4px;
+
+}
+
+/**DISEÑO INFORMES*/
+
+
+    #menu ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    font-family: Arial, sans-serif;
+    font-size: 11pt;
+    font-weight:300;
+}
+
+    #menu ul li {
+    background-color: #274766;
+    border-left: 10px solid #009688;
+}
+
+    #menu ul li a {
+    color: #ccc;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: block;
+    padding: 10px 10px 10px 20px;
+}
+
+
+    #menu ul li a:hover {
+    background: #9E9E9E;
+    border-left: 10px solid #EF6C00;
+    color: #274766;
+}
+
+    .modalinformestiulo
+    {
+    background-color: #1D96CB;
+    color: white;
+    font-size: 16px;
+    }
+
+    .sinmargen
+    {
+        padding:0;
+    }
+
+    .letrasinformes
+    {
+    font-weight: 100;
+    margin-top: 3%;
+    }
+
+    .sinnegrilla
+    {
+    font-weight:100;
+    }
+
+    .excelinforme, .imprimirinforme, .salirinforme
+    {
+        font-size: 24px;
+        padding: 1%;
+        
+    }
+
+    .excelinforme
+    {
+        color:#0DA837;
+    }
+
+    .excelinforme:hover
+    {
+        color:#027628;
+    }
+.salirinforme
+{
+    color: #D70000;
+}
+
+.salirinforme:hover
+{
+    color:#B20000;
+}

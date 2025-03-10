@@ -1,0 +1,80 @@
+﻿@model IEnumerable<PlanillajeColectivos.DTO.Products.factura>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "FACTURAS TERMINADAS";
+}
+
+    <table class="table table-responsive">
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                CLIENTE
+            </th>
+            <th>
+                VENDEDOR
+            </th>
+            <th>
+                FECHA
+            </th>
+            <th>
+                TIPO
+            </th>
+            <th>
+                TOTAL
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.persons.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.usersTabla.nombre) @Html.DisplayFor(modelItem => item.usersTabla.apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                @{
+                    if (item.tipo == 1)
+                    {
+                        <label>CONTADO</label>
+                    }
+                    else
+                    {
+                        <label>CREDITO</label>
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.total)
+            </td>
+            <td>
+                @{
+                    if (item.operationTypeId == 12)
+                    {
+                        <h5><label style="color: #008f39;">CONTABILIZADA</label></h5>
+                    }
+                    if (item.operationTypeId == 16)
+                    {
+                        <h5><label style="color: #E8230C;">FAC. ANTERIOR</label></h5>
+                    }
+                }
+            </td>
+            <td>
+                @Html.ActionLink("VER", "verFacturaTerminada", new { id = item.id }) |
+            </td>
+        </tr>
+        }
+
+    </table>

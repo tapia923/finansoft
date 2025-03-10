@@ -1,0 +1,321 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Imprimir</title>
+    <style type="text/css">
+        /* Estilos CSS */
+        .numeros {
+            font-size: 19px;
+        }
+
+        table {
+            vertical-align: top;
+            border: 1px solid black;
+            padding-bottom: 5px;
+        }
+
+        tr {
+            vertical-align: top;
+        }
+
+        td {
+            vertical-align: top;
+        }
+
+        .midnight-blue {
+            background: #2c3e50;
+            padding: 4px 4px 4px;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .silver {
+            padding: 3px 4px 3px;
+        }
+
+        .clouds {
+            padding: 3px 4px 3px;
+        }
+
+        .border-top {
+            border-top: solid 1px #bdc3c7;
+        }
+
+        .border-left {
+            border-left: solid 1px #bdc3c7;
+        }
+
+        .border-right {
+            border-right: solid 1px #bdc3c7;
+        }
+
+        .border-bottom {
+            border-bottom: solid 1px #bdc3c7;
+        }
+
+        table.page_footer {
+            width: 100%;
+            border: none;
+            background-color: white;
+            padding: 2mm;
+            border-collapse: collapse;
+            border: none;
+        }
+
+        tr.border_bottom td, th {
+            border-bottom: 1pt solid black;
+            font-weight: bold;
+        }
+
+        td, th {
+            padding-top: 5px;
+        }
+    </style>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script> <!-- Código QR -->
+</head>
+<body>
+
+    @model IEnumerable<PlanillajeColectivos.DTO.Products.pedidosViewModel2>
+
+    <page backtop="2mm" backbottom="2mm" backleft="0mm" backright="129mm" style="font-size: 10pt; font-family: arial">
+        <table cellspacing="0" style="width: 100%; border: none;">
+            <tr>
+                <!-- Contenedor para el código QR en el encabezado -->
+                <td style="width: 20%; vertical-align: top;">
+                    <div id="qrcode" style="margin-top: 20px;"></div> <!-- Aquí se generará el código QR -->
+                </td>
+                <td style="vertical-align: top;">
+                    <div>
+                        <h4>Factura electronica de venta</h4>
+                        <span style="font-size:20px;font-weight:bold">No. @ViewBag.PrefijoFactura - @ViewBag.numeroFactura</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100%; font-size:12px;text-align:center">
+
+
+
+
+                    <div style="font-size:20px;font-weight:bold">GRANOS DISTRISER</div>
+                    <div style="font-size:20px;font-weight:bold">Luis Bolivar Serrano Quisntanchala</div>
+                    <div class="numeros">
+                        <br>Calle 14A No 10-52<br>
+                        13015277-6<br>
+                        Ipiales - Nariño<br>
+                        Contacto:  315 3638964 <br>
+                        bolivarserranoq@gmail.com<br>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Detalles del cliente -->
+        <br>
+        <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+            <tr class="border_bottom">
+                <td colspan="2" style="width:100%;">ADQUIRIENTE</td>
+            </tr>
+            <tr>
+                <td><b>N° Identificacion</b></td>
+                <td>@ViewBag.identificacion</td>
+            </tr>
+            <tr>
+                <td><b>Nombre</b></td>
+                <td>@ViewBag.cliente</td>
+            </tr>
+            <tr>
+                <td><b>Dirección</b></td>
+                <td>@ViewBag.direccion</td>
+            </tr>
+            <tr>
+                <td><b>Teléfono</b></td>
+                <td>@ViewBag.celular</td>
+            </tr>
+
+        </table>
+
+        <!-- Datos del vendedor y fecha -->
+        <br>
+        <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+            <tr class="border_bottom">
+                <td style="width:30%;">VENDEDOR</td>
+                <td style="width:20%;">FECHA</td>
+            </tr>
+            <tr>
+                <td>@ViewBag.vendedor</td>
+                <td>@ViewBag.fecha.ToString("yyyy-MM-dd") <span id="realtime-time"></span></td>
+            </tr>
+        </table>
+
+        <!-- Detalles de los productos -->
+        <br>
+        <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+            <tr class="border_bottom">
+                <th style="width: 5%;text-align:center">COD</th>
+                <th style="width: 5%;text-align:center">CAN.</th>
+                <th style="width: 55%">DESCRIPCION</th>
+                <th style="width: 15%;text-align: right">PRECIO UNIT.</th>
+                <th style="width: 5%;text-align: right">IVA</th>
+                <th style="width: 15%;text-align: right">VR TOTAL</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td style="width: 5px; text-align:center">@item.cod</td>
+                <td style="width: 5px; text-align:center">@item.cantidad</td>
+                <td style="width: 55px;">@(item.Referencia+" - "+item.nombre)</td>
+                <td style="width: 15px; text-align: right">@item.unidad</td>
+                <td style="width: 5px; text-align: right">@item.iva</td>
+                <td style="width: 15px; text-align: right">@item.total</td>
+            </tr>
+            }
+        </table>
+
+        <!-- Detalles de IVA -->
+        <br>
+        <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+            <tr class="border_bottom">
+                <td colspan="2" style="width:100%;">DETALLE DEL IVA</td>
+            </tr>
+            <tr>
+                <td><b>Valor Total Excentos:</b></td>
+                <td>@ViewBag.valorTotalExcentos</td>
+            </tr>
+            <tr>
+                <td><b>Valor Total Excluidos:</b></td>
+                <td>@ViewBag.valorTotalExcluidos</td>
+            </tr>
+            <tr>
+                <td><b>Base IVA 19%:</b></td>
+                <td>@ViewBag.baseIVA19</td>
+            </tr>
+            <tr>
+                <td><b>Valor IVA 19%:</b></td>
+                <td>@ViewBag.valorIVA19</td>
+            </tr>
+            <tr>
+                <td><b>Base IVA 5%:</b></td>
+                <td>@ViewBag.baseIVA5</td>
+            </tr>
+            <tr>
+                <td><b>Valor IVA 5%:</b></td>
+                <td>@ViewBag.valorIVA5</td>
+            </tr>
+            <tr>
+                <td><b>INC a las bolsas:</b></td>
+                <td>@ViewBag.totalBolsas</td>
+            </tr>
+        </table>
+
+        <!-- Forma de pago -->
+        <br />
+        <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+            <tr class="border_bottom">
+                <td colspan="2" style="width:100%;">FORMA DE PAGO</td>
+            </tr>
+            <tr>
+                <td><b>Valor Total:</b></td>
+                <td>@ViewBag.total</td>
+            </tr>
+            <tr>
+                <td><b>Contado:</b></td>
+                <td>Efectivo</td>
+            </tr>
+        </table>
+
+        <!-- Información del beneficio -->
+        @if (ViewBag.beneficio == 1)
+        {
+        <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+            <tr class="border_bottom">
+                <td colspan="2" style="width:100%;">INFORMACION DE LOS BENEFICIOS</td>
+            </tr>
+            <tr>
+                <td><b>SUBSIDIO POR ESTA COMPRA</b></td>
+                <td>@ViewBag.valorConvenio</td>
+            </tr>
+        </table>
+        }
+
+        <!-- Datos del emisor y autorización -->
+        <br />
+        <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+            <tr class="border_bottom">
+                <td colspan="2" style="width:100%;">DATOS DEL EMISOR Y AUTORIZACION DE FACTURA</td>
+            </tr>
+            <tr>
+                <td>
+                    A esta factura de venta aplican las normas relativas a la letra de cambio (articulo 5 Ley 1231 de 2008).
+                    Con esta el comprador declara haber recibido real y materialmente las mercancías o prestación de servicios descritos
+                    en este título - valor. <b>Número Autorización 18764079056577 aprobado en 2024-09-07 prefijo FEVB desde el número 1 al 500 Vigencia: 24 meses</b>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Información de la factura elaborada -->
+        <br />
+        <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt;">
+            <tr class="border_bottom">
+                <td colspan="2" style="width:100%;">FACTURA ELABORADA POR</td>
+            </tr>
+            <tr>
+                <td>FinanSoft Facturacion - FinanSoft</td>
+            </tr>
+        </table>
+        <br />
+
+        <div style="font-size:11pt;text-align:left;font-weight:bold">Gracias por su compra!</div>
+    </page>
+
+    <script>
+
+        // Generación del código QR con codigo CUFE
+
+        var LlaveCUFE = '@ViewBag.LlaveCUFE';
+
+        // Generación del código QR
+        var qrData = "Factura No: " + '@ViewBag.PrefijoFactura' + ' - ' + '@ViewBag.numeroFactura' +
+                      "\nCliente: " + '@ViewBag.cliente' +
+                      "\nTotal: " + '@ViewBag.total' +
+                      "\nFecha: " + '@ViewBag.fecha' +
+
+                      "\nURL: " + 'https://catalogo-vpfe.dian.gov.co/document/searchqr?documentkey=' + LlaveCUFE;
+
+
+
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            text: qrData,
+            width: 128,
+            height: 128,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        function updateTime() {
+            var currentDate = new Date();
+            var hours = currentDate.getHours().toString().padStart(2, '0');
+            var minutes = currentDate.getMinutes().toString().padStart(2, '0');
+            var seconds = currentDate.getSeconds().toString().padStart(2, '0');
+
+            // Formato HH:mm:ss
+            var timeString = hours + ":" + minutes + ":" + seconds;
+
+            // Actualiza el contenido de la etiqueta con el id "realtime-time"
+            document.getElementById("realtime-time").textContent = timeString;
+        }
+
+        // Llama a la función para actualizar la hora inmediatamente
+        updateTime();
+
+        // Actualiza la hora cada segundo
+        //setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

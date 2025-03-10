@@ -1,0 +1,98 @@
+﻿@model PlanillajeColectivos.DTO.Otros.cashBackModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>cashBackModel</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.terceroId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.terceroId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.fechaInicio)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.fechaInicio)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.fechaEntrega)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.fechaEntrega)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.valorEntregado)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.valorEntregado)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.fechaEntregado)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.fechaEntregado)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.periodoEnMeses)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.periodoEnMeses)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.valorActual)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.valorActual)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.porcetaje)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.porcetaje)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.destino)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.destino)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

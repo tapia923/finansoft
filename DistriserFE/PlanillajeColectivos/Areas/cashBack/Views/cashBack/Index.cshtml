@@ -1,0 +1,87 @@
+﻿@model IEnumerable<PlanillajeColectivos.DTO.Otros.cashBackModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "CashBack";
+}
+
+<table id="myTable" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Cliente
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fechaInicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fechaEntrega)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.valorEntregado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fechaEntregado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.periodoEnMeses)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.valorActual)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.porcetaje)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.destino)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.persons.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fechaInicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fechaEntrega)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.valorEntregado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fechaEntregado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.periodoEnMeses)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.valorActual)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.porcetaje)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.destino)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts
+{
+
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "language": {
+                    "url": "/Content/Spanish.json"
+                }
+            });
+        });
+    </script>
+}

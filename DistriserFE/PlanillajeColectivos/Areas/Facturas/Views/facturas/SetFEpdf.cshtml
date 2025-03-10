@@ -1,0 +1,236 @@
+﻿@model PlanillajeColectivos.DTO.FacturacionElectronica.FacturaPD.ViewModelFEpdf
+
+
+<link href="~/Content/css/chosen.css" rel="stylesheet" />
+
+<link href="~/Content/styleGeneral.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<style>
+    .centrado {
+        display: flex;
+        justify-content: center;
+    }
+
+    .thcenter {
+        text-align: center;
+    }
+
+    .salto {
+        display: block;
+        content: "";
+        margin-top: 0;
+    }
+
+    .Pcentrado {
+        text-align: center;
+    }
+</style>
+
+<div class="container" style="width:90%">
+    <div style="margin-top:2%">
+        <div class="row">
+            <div class="col-md-3 col-xs-3">
+                <div class="center">
+                    <img width="110" src="~/Content/img/Logo.jpg" />
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-6">
+
+                <div class="row centrado">
+                    <h3><b>@Model.ParametrosFE.CompanyName</b></h3>
+                </div>
+                <br class="salto" />
+                <div class="row centrado">
+                    <h4><b>NIT: @Model.ParametrosFE.COMPANY_NIT</b></h4>
+                </div>
+                <br />
+                <br />
+                <div class="row centrado">
+                    <h4>@Model.ParametrosFE.cityFK.departamentoFK.paisFK.Nom_pais.ToUpper(),@Model.ParametrosFE.cityFK.departamentoFK.Nom_dep,@Model.ParametrosFE.cityFK.Nom_muni</h4>
+                </div>
+                <br class="salto" />
+                <div class="row centrado">
+                    <h4>@Model.ParametrosFE.Direccion</h4>
+                </div>
+                <br class="salto" />
+                <div class="row centrado">
+                    <h5>@Model.ParametrosFE.EMISOR_CORREO_ELECTRONICO</h5>
+                </div>
+                <br class="salto" />
+                <div class="row centrado">
+                    <h5>@Model.ParametrosFE.EMISOR_NUMERO_TELEFONICO</h5>
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-3">
+                <div class="row">
+                    <div class="centrado">
+                        <p class="small" style="font-size:8px"><b>FACTURA ELECTRÓNICA DE VENTA</b></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="centrado">
+                        <input style="border-color:#d4d4d4;border:1px solid grey;text-align:center;width:100%" type="text" name="name" value="@Model.NumeroFactura" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="centrado">
+                        <img width="130" src="@String.Format("data:image/png;base64,{0}",Convert.ToBase64String(Model.QR))" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <table class="table table-bordered" style="border-color:black">
+                <tr>
+                    <td rowspan="3" width="60%">
+                        <div style="margin-left:2%">
+                            <label>ADQUIRIENTE:&nbsp;</label>@Model.Adquiriente.NombreAdquiriente
+                            <br />
+                            <label>DOCUMENTO:&nbsp;</label>@Model.Adquiriente.DocumentoAdquiriente
+                            <br />
+                            <label>DIRECCIÓN:&nbsp;</label>@Model.Adquiriente.DireccionAdquiriente
+                            <br />
+                            <label>CORREO ELECTRÓNICO:&nbsp;</label>@Model.Adquiriente.CorreoAdquiriente
+                            <br />
+                            <label>NÚMERO TELEFÓNICO:&nbsp;</label>@Model.Adquiriente.ContactoAdquiriente
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%">
+                        <div class="centrado">
+                            <p class="Pcentrado">
+                                FECHA DE EMISIÓN<br />
+                                @Model.FechaEmision
+                            </p>
+                        </div>
+                    </td>
+                    <td width="20%">
+                        <div class="centrado">
+                            <p class="Pcentrado">
+                                FECHA DE VENCIMIENTO<br />
+                                @Model.FechaVencimiento
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="40%" colspan="2">
+                        <div class="centrado">
+                            <p class="Pcentrado">
+                                CUFE<br />
+                                @Model.Cufe
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="row">
+            <table class="table table-bordered" style="border-color:black">
+                <tr style="background-color:#494fff;color:white;">
+                    <th class="thcenter" width="5%">#</th>
+                    <th class="thcenter" width="45%">DESCRIPIÓN</th>
+                    <th class="thcenter" width="5%">CTD</th>
+                    <th class="thcenter" width="15%">VALOR UNITARIO</th>
+                    <th class="thcenter" width="15%">IMPUESTOS</th>
+                    <th class="thcenter" width="15%">SUBTOTAL</th>
+                </tr>
+                @if (Model.ListOperaciones != null)
+                {
+                    foreach (var item in Model.ListOperaciones)
+                    {
+                        <tr>
+                            <td class="thcenter" width="5%">@item.Id</td>
+                            <td class="thcenter" width="45%">@item.Descripcion</td>
+                            <td class="thcenter" width="5%">@item.Cantidad</td>
+                            <td class="thcenter" width="15%">@item.ValorUnitario</td>
+                            <td class="thcenter" width="15%">@item.Impuesto</td>
+                            <td class="thcenter" width="15%">@item.ValorTotal</td>
+                        </tr>
+                    }
+                }
+                <tr>
+                    <td align="center" rowspan="6" colspan="3" style="vertical-align:middle">
+                        <p align="left">
+                            <FONT size="1">
+                                Se hace constar que las mercancías o servicios fueron entregados real y materialmente
+                                y en todo caso, la factura será considerada irrevocablemente aceptada por el comprador
+                                si no reclamare en los tres(3) días hábiles siguientes a su recepción.<br />
+                            </FONT>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="2">
+                        <label>Subtotal Precio Unitario (=)</label><br />
+                        <label>Descuentos detalle (-)</label><br />
+                        <label>Recargos detalle (+)</label>
+                    </td>
+                    <td align="center">
+                        @Model.SubtotalPrecioUnitario<br />
+                        @Model.DescuentosDetalle<br />
+                        @Model.RecargosDetalle
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="2">
+                        <label>Subtotal No Gravados (=)</label><br />
+                        <label>Subtotal Base Gravable (=)</label><br />
+                        <label>Total Impuesto (+)</label><br />
+                        <label>Total más Impuesto (=)</label>
+                    </td>
+                    <td align="center">
+                        @Model.SubtotalNoGravados<br />
+                        @Model.SubtotalBaseGravable<br />
+                        @Model.TotalImpuesto<br />
+                        @Model.TotalMasImpuesto
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="2">
+                        <label>Descuento Global (-)</label><br />
+                        <label>Recargo Global (+)</label>
+                    </td>
+                    <td align="center">
+                        @Model.DescuentoGlobal<br />
+                        @Model.RecargoGlobal
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="2">
+                        <label>Anticipo (-)</label>
+                    </td>
+                    <td align="center">
+                        @Model.Anticipo
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="2">
+                        <label>Valor Total</label>
+                    </td>
+                    <td align="center">
+                        <label>@Model.ValorTotal</label>
+                    </td>
+                </tr>
+                <tr align="center">
+                    <td colspan="6">sdf</td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+
+

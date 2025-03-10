@@ -1,0 +1,63 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "CAMBIO DE PRECIOS";
+}
+
+<link href="~/Content/css/chosen.css" rel="stylesheet" />
+<script src="~/Scripts/sweetalert2@9.js"></script>
+
+<div class="form-group">
+    <label class="control-label col-md-4">Porcentaje Precio Contado</label>
+    <div class="col-md-6">
+        <input id="porcentajeContado" type="text" class="form-control" placeholder="Ej: 0.90" />
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4">Porcentaje Precio Credito</label>
+    <div class="col-md-6">
+        <input id="porcentajeCredito" type="text" class="form-control" placeholder="Ej: 0.85" />
+    </div>
+</div>
+
+<button id="btnCambioPrecios" class="btn btn-success btn-xs">CAMBIAR PRECIOS</button>
+
+@section scripts
+{
+    <script>
+        $("#btnCambioPrecios").click(function () {
+            $("#btnCambioPrecios").prop("disabled", true);
+            var porcentajeContado = $("#porcentajeContado").val();
+            var porcentajeCredito = $("#porcentajeCredito").val();
+
+            if (porcentajeContado != "") {
+                if (porcentajeCredito != "") {
+                    $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("cambioPreciosPost", "products")",
+                    datatype: "Json",
+                        data: { porcentajeContado: porcentajeContado, porcentajeCredito: porcentajeCredito },//solo para enviar datos
+                    success: function (data) {
+                        alert("ok");
+                    }
+                });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Deve ingresar un porcentaje en el campo "Porcentaje Precio Credito"!'
+                    })
+                    $("#btnCambioPrecios").prop("disabled", false);
+                }
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Deve ingresar un porcentaje en el campo "Porcentaje Precio Contado"!'
+                })
+                $("#btnCambioPrecios").prop("disabled", false);
+            }
+
+        });
+    </script>
+}

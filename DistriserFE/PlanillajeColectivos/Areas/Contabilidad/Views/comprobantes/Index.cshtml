@@ -1,0 +1,113 @@
+﻿@model IEnumerable<PlanillajeColectivos.DTO.Contabilidad.comprobante>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.tipoComprobante)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.numero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.centroCostoId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.detalle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.terceroId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.valorTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.anio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.mes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fechaCreacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.usuarioId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.formaPagoId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.documento)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tipoComprobante)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.numero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.centroCostoId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.detalle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.terceroId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.valorTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.anio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fechaCreacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.usuarioId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.formaPagoId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.documento)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

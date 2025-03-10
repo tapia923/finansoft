@@ -1,0 +1,191 @@
+﻿@model PlanillajeColectivos.DTO.Products.providers
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "NUEVO PROVEEDOR";
+}
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<link href="~/Content/css/chosen.css" rel="stylesheet" />
+<script src="~/Scripts/Providers/Create.js"></script>
+
+@using (Html.BeginForm("Create", "providersC", new { area = "Persons" }, FormMethod.Post, new { id = "theForm" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @Html.HiddenFor(model => model.economicActivityCode, new { htmlAttributes = new { @id = "economicActivityCode" } })
+    @Html.HiddenFor(model => model.locationId, new { htmlAttributes = new { @id = "locationId" } })
+    @Html.HiddenFor(model => model.retentionId, new { htmlAttributes = new { @id = "retentionId" } })
+    @Html.HiddenFor(model => model.taxClassification, new { htmlAttributes = new { @id = "taxClassification" } })
+    @Html.HiddenFor(model => model.industryAndCommerce, new { htmlAttributes = new { @id = "industryAndCommerce" } })
+    @Html.HiddenFor(model => model.ivaId, new { htmlAttributes = new { @id = "ivaId" } })
+
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Actividad Económica</label>
+        <div class="col-md-10">
+            @Html.DropDownList("economicActivities", null, new { @class = "chosen-select-single", @id = "economicActivity" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Ubicación</label>
+        <div class="col-md-10">
+            @Html.DropDownList("locations", null, new { @class = "chosen-select-single", @id = "location" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Retención en la Fuente</label>
+        <div class="col-md-10">
+            @Html.DropDownList("retentions", null, new { @class = "chosen-select-single", @id = "retention" })
+        </div>
+    </div>
+
+    <div class="form-group" id="divTaxClassification">
+        <label class="control-label col-md-2">Clasificación Tributaria</label>
+        <div class="col-md-10">
+            @Html.DropDownList("taxClassification", null, new { @class = "chosen-select-single", @id = "taxClassificationSelect" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Industria y Comercio</label>
+        <div class="col-md-10">
+            @Html.DropDownList("industryAndCommerceList", null, new { @class = "chosen-select-single", @id = "industryAndCommerceSelect" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Iva</label>
+        <div class="col-md-10">
+            @Html.DropDownList("iva", null, new { @class = "chosen-select-single", @id = "iva" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.nit, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.nit, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.nit, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>País</label>
+                <div class="col-md-10">
+                    @Html.DropDownList("paises", (IEnumerable<SelectListItem>)ViewBag.pais, null, new { @class = "form-control", @id = "pais" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Departamento</label>
+                <div class="col-md-12">
+
+                    <select class="form-control" id="departamento"></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Ciudad</label>
+                <div class="col-md-12">
+                    <select class="form-control" name="muniAux" id="muniAux"></select>
+                    @Html.HiddenFor(model => model.municipio, new { @class = "form-control", @id = "municipio" })
+                    @Html.ValidationMessageFor(model => model.municipio, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.address, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.address, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.cell, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.cell, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.cell, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.phone, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" value="Crear" id="submitBtn" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Regresar al Listado", "Index")
+</div>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $(".chosen-select-single").chosen();
+            $(".chosen-select-multiple").chosen();    //DESPUES DEL FINAL DEL DOCUMENTO AL PRINCIPIO DE LOS SCRIPTS
+        });
+
+        $("#retention").change(function () {
+            var retention = $("#retention").val();
+            if (retention == "8") {
+                $("#divTaxClassification").hide();
+                $('#taxClassificationSelect').val("").trigger('chosen:updated');
+            } else {
+                $("#divTaxClassification").show();
+            }
+        });
+
+        $("#submitBtn").click(function () {
+            $("#economicActivityCode").val($("#economicActivity").val());
+            $("#locationId").val($("#location").val());
+            $("#retentionId").val($("#retention").val());
+            $("#taxClassification").val($("#taxClassificationSelect").val());
+            $("#industryAndCommerce").val($("#industryAndCommerceSelect").val());
+            $("#ivaId").val($("#iva").val());
+            $('#theForm').submit();
+        });
+    </script>
+}

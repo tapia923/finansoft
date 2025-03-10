@@ -1,0 +1,120 @@
+﻿@model PlanillajeColectivos.DTO.Contabilidad.movimientos
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>movimientos</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.tipoComprobante)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.tipoComprobante)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.numero)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.numero)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.cuenta)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.cuenta)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.terceroId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.terceroId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.detalle)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.detalle)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.debito)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.debito)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.credito)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.credito)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.baseMov)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.baseMov)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.centroCostoId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.centroCostoId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.fechaCreado)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.fechaCreado)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.documento)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.documento)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

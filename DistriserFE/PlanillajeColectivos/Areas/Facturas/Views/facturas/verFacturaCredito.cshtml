@@ -1,0 +1,214 @@
+﻿@model IEnumerable<PlanillajeColectivos.DTO.Products.pedidosViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "FACTURA CREDITO";
+}
+
+<link href="~/Content/css/chosen.css" rel="stylesheet" />
+<script src="~/Scripts/sweetalert2@9.js"></script>
+
+<label class="col-form-label"><h5>Cliente: </h5></label>
+<label class="col-form-label">@ViewBag.cliente</label>
+<br />
+<label class="col-form-label"><h5>Vendedor: </h5></label>
+<label class="col-form-label">@ViewBag.vendedor</label>
+<br />
+<label class="col-form-label"><h5>Saldo Actual: </h5></label>
+<label class="col-form-label">$ @ViewBag.saldo</label>
+<input type="hidden" id="facturaId" value="@ViewBag.facturaId" />
+<input type="hidden" id="saldo" value="@ViewBag.saldo" />
+
+<table id="myTable" class="table table-striped table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>
+                CANTIDAD
+            </th>
+            <th>
+                CODIGO DE BARRAS
+            </th>
+            <th>
+                NOMBRE
+            </th>
+            <th>
+                PRECIO UNIDAD
+            </th>
+            <th>
+                TOTAL
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cantidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.codigoBarras)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.unidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.total)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-md-2">
+        <label><h4>TOTAL</h4></label>
+    </div>
+    <div class="col-md-2">
+        <h4><label id="labelTotal">@ViewBag.total</label></h4>
+    </div>
+</div>
+<br />
+<br />
+<h3>ABONOS</h3>
+
+<table class="table table-striped table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Fecha de Pago
+            </th>
+            <th>
+                Abono
+            </th>
+            <th>
+                Saldo
+            </th>
+        </tr>
+    </thead>
+    <tbody id="tablaAbonos"></tbody>
+</table>
+
+<div class="row">
+    <div class="col-md-2">
+        <h4>EFECTIVO</h4>
+    </div>
+    <div class="col-md-2">
+        <input type="text" class="form-control" value="0" id="efectivo" />
+    </div>
+    <div class="col-md-2">
+        <button id="btnRealizarAbonos" class="btn btn-success">REALIZAR ABONO</button>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $("#btnRealizarAbonos").click(function () {
+            var efectivo = $("#efectivo").val();
+            if (efectivo == "") {
+                efectivo = "0";
+            }
+            efectivo = efectivo.replace(".", "");
+            efectivo = efectivo.replace(".", "");
+
+            var saldo = $("#saldo").val();
+            var facturaId = $("#facturaId").val();
+            if (efectivo != 0 && (saldo != 0)) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("crearAbono", "facturas")",
+                    datatype: "Json",
+                    data: { efectivo : efectivo, facturaId : facturaId },//solo para enviar datos
+                    success: function (data) {
+                        if (data == 1) {
+                            Swal.fire({
+                                title: 'Abono Realizado Correctamente!',
+                                icon: 'success',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'Ok'
+                            }).then((result) => {
+                                if (result.value)
+                                {
+                                    location.reload();
+                                };
+                            });
+                        }
+                    }
+                });
+            }
+        });
+
+        $(document).ready(function () {
+            var labelTotal = $("#labelTotal").text(formatNumberMiles.new($("#labelTotal").text()));
+
+                $("#tablaAbonos").empty();
+                var facturaId = $("#facturaId").val();
+
+                $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("getAbonosCreditos", "facturas")",
+                        datatype: "Json",
+                        data: { facturaId: facturaId },//solo para enviar datos
+                        success: function (data) {
+                            data = JSON.parse(data);
+                            $.each(data, function (key, val) {
+
+                                var tr = '<tr>';
+                                tr += '<td>' + (key + 1) + '</td>';
+                                tr += '<td>' + val.fechaPago + '</td>';
+                                tr += '<td>' + val.valorPagado + '</td>';
+                                tr += '<td>' + val.saldo + '</td>';
+                                tr += '</tr>';
+                                $('#tablaAbonos').append(tr);
+                            });
+                        }
+                });
+
+        });
+
+        /* SEPARADOR DE MILES POR KEY UP */
+        $(document).ready(function () {
+            $("#efectivo").on({
+                "focus": function (event) {
+                    $(event.target).select();
+                },
+                "keyup": function (event) {
+                    $(event.target).val(function (index, value) {
+                        return value.replace(/\D/g, "")
+                            .replace(/([0-9])([0-9]{3})$/, '$1.$2')
+                            .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+                    });
+                }
+            });
+        });
+            /*FIN SEPARADOR DE MILES POR KEY UP*/
+
+        //FORMATEAR UN NUMERO
+        var formatNumberMiles = {
+            separador: ".", // separador para los miles
+            sepDecimal: ',', // separador para los decimales
+            formatear: function (num) {
+                num += '';
+                var splitStr = num.split('.');
+                var splitLeft = splitStr[0];
+                var splitRight = splitStr.length > 1 ? this.sepDecimal + splitStr[1] : '';
+                var regx = /(\d+)(\d{3})/;
+                while (regx.test(splitLeft)) {
+                    splitLeft = splitLeft.replace(regx, '$1' + this.separador + '$2');
+                }
+                return this.simbol + splitLeft + splitRight;
+            },
+            new: function (num, simbol) {
+                this.simbol = simbol || '';
+                return this.formatear(num);
+            }
+        }
+    </script>
+}

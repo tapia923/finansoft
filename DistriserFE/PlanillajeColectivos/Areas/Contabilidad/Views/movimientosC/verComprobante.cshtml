@@ -1,0 +1,110 @@
+﻿@model PlanillajeColectivos.DTO.Contabilidad.comprobante
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "COMPROBANTE";
+}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<div id="imprimir">
+    <div class="panel panel-default" style="margin-top:0%; border:none">
+        <table border="1" class="" style="width: 100%">
+            <tr>
+                <td rowspan="2" width="60%" style="text-align: center;font-size:13px">
+                    <label>DISTRIPOLLO LOS ANGELES</label><br />
+                     <label>NIT: 37087259-9</label>
+                </td>
+                <td rowspan="2" style=" text-align: center;">
+                    <strong><label>@ViewBag.tipoComprobante No</label></strong>
+                    <br /><label style="font-size:23px">@Html.DisplayFor(model => model.numero)</label><br /><label style="font-size:12px">@Html.DisplayFor(model => model.fechaCreacion)</label>
+                </td>
+            </tr>
+        </table>
+
+        <table border="1" class="" style="margin-top:5px;font-size:15px;width:100%">
+            <tr>
+                <td>
+                    <div class="col-md-12 concepto"><label><strong>Concepto:</strong>@Html.DisplayFor(model => model.detalle) </label></div>
+                </td>
+            </tr>
+        </table>
+
+        <table border="1" class="" style="margin-top:5px;font-size:12px;width:100%">
+            <tr style="text-align: center;font-weight: bold;">
+                <td width="10%">Cuenta</td>
+                <td width="10%">Nombre Cuenta</td>
+                <td width="10%">Detalle</td>
+                <td width="5%">C.C</td>
+                <td width="5%">Base</td>
+                <td width="15%">Débito</td>
+                <td width="15%">Crédito</td>
+            </tr>
+            <tbody>
+                @foreach (var item in ViewBag.movimientos)
+                {
+                <tr>
+                    <td style="text-align:left;padding: 6px;">@item.cuenta</td>
+                    <td style="text-align:left;padding: 6px;">@item.planCuentas.nombre</td>
+                    @*@if (item.persons != null)
+        {
+            <td style="text-align:left;padding: 6px;">@item.persons.name</td>
+        }
+        else
+        {
+            <td style="text-align:left;padding: 6px;"></td>
+        }*@
+                    <td style="text-align:left;padding: 6px;">@item.detalle</td>
+                    <td style="text-align:left;padding: 6px;">@Html.DisplayFor(model => model.centroCosto.nombre)</td>
+                    <td style="text-align:right;padding: 6px;">@item.baseMov.ToString("N2")</td>
+                    <td style="text-align:right;padding: 6px;">@item.debito.ToString("N2")</td>
+                    <td style="text-align:right;padding: 6px;">@item.credito.ToString("N2")</td>
+                </tr>
+                }
+
+
+
+                <tr>
+                    <td id="total" colspan="5" style="padding:1%; font-weight:bold"> SUMAS IGUALES: </td>
+                    <td colspan="2" style="padding:1%;text-align: right;"><strong>@Html.DisplayFor(model => model.valorTotal)</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        @if (Model.estado)
+        {
+            <table border="1" class="" style="margin-top:5px;font-size:12px;width:100%">
+                <tr>
+                    <td style="height: 71px;">&nbsp</td>
+                    <td style="height: 71px;">&nbsp</td>
+                    <td style="height: 71px;">&nbsp</td>
+                </tr>
+                <tr>
+                    <td style="padding:3px;">Elaboró</td>
+                    <td style="padding:3px;">Revisó</td>
+                    <td style="padding:3px;">Aprobó</td>
+                </tr>
+            </table>
+        }
+        else
+        {
+            <table border="1" class="" style="margin-top:5px;font-size:12px;width:100%">
+                <tr>
+                    <td style="height: 71px;" align="center"><text style="color:red"><h1>ANULADO</h1></text></td>
+                    <td style="height: 71px;" align="center"><text style="color:red"><h1>ANULADO</h1></text></td>
+                    <td style="height: 71px;" align="center"><text style="color:red"><h1>ANULADO</h1></text></td>
+                </tr>
+                <tr>
+                    <td style="padding:3px;">Elaboró</td>
+                    <td style="padding:3px;">Revisó</td>
+                    <td style="padding:3px;">Aprobó</td>
+                </tr>
+            </table>
+
+        }
+
+    </div>
+</div>
+<br />
+
+
+
+

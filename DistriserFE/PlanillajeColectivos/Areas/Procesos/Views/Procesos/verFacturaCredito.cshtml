@@ -1,0 +1,71 @@
+﻿@model IEnumerable<PlanillajeColectivos.DTO.Products.pedidosViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "FACTURA CREDITO";
+}
+
+<link href="~/Content/css/chosen.css" rel="stylesheet" />
+<script src="~/Scripts/sweetalert2@9.js"></script>
+
+<label class="col-form-label"><h5>Cliente: </h5></label>
+<label class="col-form-label">@ViewBag.cliente</label>
+<br />
+<label class="col-form-label"><h5>Vendedor: </h5></label>
+<label class="col-form-label">@ViewBag.vendedor</label>
+
+<table id="myTable" class="table table-striped table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>
+                CANTIDAD
+            </th>
+            <th>
+                CODIGO DE BARRAS
+            </th>
+            <th>
+                NOMBRE
+            </th>
+            <th>
+                PRECIO UNIDAD
+            </th>
+            <th>
+                TOTAL
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cantidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.codigoBarras)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.unidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.total)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-md-3" id="columnaParaBtn">
+        @Html.ActionLink("IMPRIMIR FACTURA", "imprimirFacturaCredito", new { id = @ViewBag.facturaId }, new { @class = "btn btn-success btn-xs" })
+    </div>
+    <div class="col-md-2">
+        <h4><label>TOTAL</label></h4>
+    </div>
+    <div class="col-md-2">
+        <h4><label>@ViewBag.total</label></h4>
+    </div>
+</div>
