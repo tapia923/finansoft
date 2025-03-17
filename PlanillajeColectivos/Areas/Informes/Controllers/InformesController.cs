@@ -881,22 +881,31 @@ namespace PlanillajeColectivos.Areas.Informes.Controllers
                                 if (item2.products.ivaId == 1)
                                 {
                                     decimal val = db.iva.Where(x => x.id == 1).Select(x => x.value).FirstOrDefault();
-                                    decimal valorIva = ((item2.price * val) / 100);
-                                    totalAntesIva += (item2.price - valorIva) * item2.quantity;
+                                    decimal valorIva = (item2.price * val/100);
+                                    //totalAntesIva += (item2.price - valorIva) * item2.quantity;
+                                    
+                                    
                                     iva1 += valorIva * item2.quantity;
-
+                                    totalAntesIva =  iva1;
                                 }
                                 else if (item2.products.ivaId == 2)
                                 {
                                     decimal val = db.iva.Where(x => x.id == 2).Select(x => x.value).FirstOrDefault();
                                     decimal valorIva = ((item2.price * val) / 100);
-                                    totalAntesIva += (item2.price - valorIva) * item2.quantity;
+                                    //totalAntesIva += (item2.price - valorIva) * item2.quantity;
+                                   
                                     iva2 += valorIva;
+
+                                    totalAntesIva = iva2;
                                 }
                             }
                             //....
+                            
 
-                            ws.Cells["A" + j].Value = item.id;
+
+
+
+                            ws.Cells["A" + j].Value = item.facturaFisica;
                             ws.Cells["B" + j].Value = item.date.ToString();
                             ws.Cells["C" + j].Value = item.usersTabla.nombre + " " + item.usersTabla.apellido;
                             ws.Cells["D" + j].Value = item.persons.name;
@@ -904,7 +913,7 @@ namespace PlanillajeColectivos.Areas.Informes.Controllers
                             ws.Cells["F" + j].Value = iva2;
                             ws.Cells["G" + j].Value = tipo;
                             ws.Cells["H" + j].Value = item.saldoCredito;
-                            ws.Cells["I" + j].Value = totalAntesIva;
+                            ws.Cells["I" + j].Value = item.total - totalAntesIva;
                             ws.Cells["J" + j].Value = item.total;
 
                             j++;

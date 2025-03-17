@@ -52,7 +52,8 @@
             <i class="fa fa-plus-circle" aria-hidden="true"></i> Agregar cuenta
         </button>
 
-        <a id="btnGrabar" aria-label="Left Align" data-toggle="modal" data-target="#centro" style="background-color: #509601; color: #FFF; padding: 6px; border: 1px solid; border-radius: 5px;">
+        <a id="btnGrabar" aria-label="Left Align" data-toggle="modal" data-target="#centro"
+           style="background-color: #509601; color: #FFF; padding: 6px; border: 1px solid; border-radius: 5px;">
             <i class="fa fa-check-circle" aria-hidden="true"></i> Grabar
         </a>
     </div>
@@ -61,25 +62,21 @@
 <div id="anotaciones2">
     <div class='row'>
         <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-            <div>
-                @*CPalacios - problema en barra de desplazamiento
-                    <div class="aaa">*@
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover table-responsive" id="anotaciones" style="font-size: 13px;">
-                        <thead>
-                            <tr>
-                                <th width="20%" class="columnatablaazul">Cuenta</th>
-                                <th width="20%" class="columnatablaazul">Tercero</th>
-                                <th width="15%" class="columnatablaazul2">CC</th>
-                                <th width="10%" class="columnatablaazul">Base</th>
-                                <th width="15%" class="columnatablaazul2">Debito</th>
-                                <th width="15%" class="columnatablaazul">Credito</th>
-                                <th width="5%" class="columnatablaazul">Eliminar</th>
-                            </tr>
-                        </thead>
-                        <tbody id="bodyfilas"></tbody>
-                    </table>
-                </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="anotaciones" style="font-size: 13px;">
+                    <thead>
+                        <tr>
+                            <th width="20%" class="columnatablaazul">Cuenta</th>
+                            <th width="20%" class="columnatablaazul">Tercero</th>
+                            <th width="15%" class="columnatablaazul2">CC</th>
+                            <th width="10%" class="columnatablaazul">Base</th>
+                            <th width="15%" class="columnatablaazul2">Débito</th>
+                            <th width="15%" class="columnatablaazul">Crédito</th>
+                            <th width="5%" class="columnatablaazul">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bodyfilas"></tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -112,17 +109,22 @@
 
 
         $(document).ready(function () {
-            $(".chosen-select-single").chosen();
-            $(".chosen-select-multiple").chosen();
+        $(".chosen-select-single").chosen();
+        $(".chosen-select-multiple").chosen();
 
-            //$(".s2").each(function () {
-            //    initSelect2($(this));
-            //});
-
-            $('body').on('DOMNodeInserted', 'select', function () {
-                initSelect2($(this));
+        // reemplazo de DOMNodeInserted con MutationObserver
+        const observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                mutation.addedNodes.forEach(function (node) {
+                    if (node.tagName === 'SELECT') {
+                        initSelect2($(node));
+                    }
+                });
             });
         });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+    });
 
 
         function formatRepo(repo) {
@@ -196,6 +198,7 @@
         });
 
         function funcAgregar() {
+
             var newTR = $('<tr>').appendTo("#anotaciones");
 
             var tdS2 = $('<td>').appendTo(newTR);
@@ -211,6 +214,7 @@
             newTR.append('<td><input type="text" class="form-control debitoFilas" value="0"></td>');
             newTR.append('<td><input type="text" class="form-control creditoFilas" value="0"></td>');
             newTR.append('<td><button class="borrar btn btn-danger btn-xs borrarFilas">X</button></td>');
+            //alert("HOLA1");
         }
 
         $(document).on('keyup', '.debitoFilas', function () {
@@ -366,7 +370,7 @@
                                             title: 'Oops...',
                                             text: 'Seleccione un Centro de Costos para el Comprobante!'
                                         })
-                                    }                                   
+                                    }
                                 } else {
                                     Swal.fire({
                                         icon: 'error',
@@ -374,7 +378,7 @@
                                         text: 'El campo "Detalle" no puede estar vacio!'
                                     })
                                 }
-                                
+
                             } else {
                                 Swal.fire({
                                     icon: 'error',
