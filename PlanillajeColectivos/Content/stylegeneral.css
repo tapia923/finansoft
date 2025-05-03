@@ -1,4 +1,4 @@
-﻿
+
 /**Estilos panel nota de contabliliad*/
 
 .divdetallesnota {
@@ -604,7 +604,7 @@
 .tituloinformes
 {
     text-align: center;
-    background-color: #009688;
+    background-color: #1D96CB;
     color: white;
     padding: 4px;
 
@@ -612,81 +612,83 @@
 
 /**DISEÑO INFORMES*/
 
-
-    #menu ul {
+/* Estilos generales del menú principal */
+#menu ul {
     list-style-type: none;
     margin: 0px;
     padding: 0px;
     font-family: Arial, sans-serif;
     font-size: 11pt;
-    font-weight:300;
+    font-weight: 300;
 }
 
+    /* Estilos de los elementos del menú - Define el fondo blanco y el borde lateral izquierdo azul */
     #menu ul li {
-    background-color: #274766;
-    border-left: 10px solid #009688;
-}
+        background-color: #FFF;
+        border-left: 10px solid #1D96CB;
+    }
 
-    #menu ul li a {
-    color: #ccc;
-    text-decoration: none;
-    text-transform: uppercase;
-    display: block;
-    padding: 10px 10px 10px 20px;
-}
+        /* Estilos de los enlaces del menú - Define el color del texto, elimina subrayado y transforma a mayúsculas */
+        #menu ul li a {
+            color: #000;
+            text-decoration: none;
+            text-transform: uppercase;
+            display: block;
+            padding: 10px 10px 10px 20px;
+        }
 
+            /* Efecto hover del menú - Cambia el fondo a gris y el color del texto al pasar el mouse */
+            #menu ul li a:hover {
+                background: #9E9E9E;
+                border-left: 10px solid #1D96CB;
+                color: #000;
+            }
 
-    #menu ul li a:hover {
-    background: #9E9E9E;
-    border-left: 10px solid #EF6C00;
-    color: #274766;
-}
-
-    .modalinformestiulo
-    {
+/* Estilos del título del modal - Fondo azul y texto blanco */
+.modalinformestiulo {
     background-color: #1D96CB;
     color: white;
     font-size: 16px;
-    }
+}
 
-    .sinmargen
-    {
-        padding:0;
-    }
+/* Clase para eliminar el padding */
+.sinmargen {
+    padding: 0;
+}
 
-    .letrasinformes
-    {
+/* Estilos para el texto de los informes - Peso de fuente ligero y margen superior */
+.letrasinformes {
     font-weight: 100;
     margin-top: 3%;
+}
+
+/* Clase para texto sin negrita */
+.sinnegrilla {
+    font-weight: 100;
+}
+
+/* Estilos comunes para los botones de acción (Excel, Imprimir, Salir) */
+.excelinforme, .imprimirinforme, .salirinforme {
+    font-size: 24px;
+    padding: 1%;
+}
+
+/* Estilos específicos para el botón de Excel - Color azul */
+.excelinforme {
+    color: #569ED1;
+}
+
+    /* Efecto hover para el botón de Excel - Color azul más claro al pasar el mouse */
+    .excelinforme:hover {
+        color: #00B8D4;
     }
 
-    .sinnegrilla
-    {
-    font-weight:100;
-    }
-
-    .excelinforme, .imprimirinforme, .salirinforme
-    {
-        font-size: 24px;
-        padding: 1%;
-        
-    }
-
-    .excelinforme
-    {
-        color:#0DA837;
-    }
-
-    .excelinforme:hover
-    {
-        color:#027628;
-    }
-.salirinforme
-{
+/* Estilos para el botón de Salir - Color rojo */
+.salirinforme {
     color: #D70000;
 }
 
-.salirinforme:hover
-{
-    color:#B20000;
-}
+    /* Efecto hover para el botón de Salir - Mantiene el color rojo al pasar el mouse */
+    .salirinforme:hover {
+        color: #D70000;
+    } 
