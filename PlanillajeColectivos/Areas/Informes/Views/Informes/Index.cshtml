@@ -1,4 +1,4 @@
-﻿@{
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
@@ -55,9 +55,13 @@
             <li><a href="#" data-toggle="modal" data-target="#librosaux" data-informe="4"><i class="fa fa-list-alt" aria-hidden="true"></i> Facturación</a></li>
             <li><a href="#" data-toggle="modal" data-target="#librosaux" data-informe="5"><i class="fa fa-list-alt" aria-hidden="true"></i> Abastecimientos</a></li>
             <li><a href="#" data-toggle="modal" data-target="#librosaux" data-informe="6"><i class="fa fa-list-alt" aria-hidden="true"></i> Libro Auxiliar</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#librosaux" data-informe="7"><i class="fa fa-list-alt" aria-hidden="true"></i> Auxiliar por Terceros Detallado</a></li>
+
+            @* Se comentaron las visualizaciones de informes por razones de mayor o determinadas por el jefe Luis Bolaños *@
+            @* Desarrollador: GitHub Fact Sebastian("14/04/2025") *@
+            @* se quita de la vista los siguientes informes de distriser mas en controlador siguen funcionales, el controlador es informescontroller.cs *@
+            @*<li><a href="#" data-toggle="modal" data-target="#librosaux" data-informe="7"><i class="fa fa-list-alt" aria-hidden="true"></i> Auxiliar por Terceros Detallado</a></li>
             <li><a href="#" data-toggle="modal" data-target="#librosaux" data-informe="8"><i class="fa fa-list-alt" aria-hidden="true"></i> Auxiliar por Cuenta</a></li>
-            <li><a href="/Contabilidad/Reportes/ComprobanteInformeDiario"><i class="fa fa-list-alt" aria-hidden="true"></i> Comprobante Informe Diario</a></li>
+            <li><a href="/Contabilidad/Reportes/ComprobanteInformeDiario"><i class="fa fa-list-alt" aria-hidden="true"></i> Comprobante Informe Diario</a></li>*@
             <li><a href="/Contabilidad/Reportes/InformeInventarios"><i class="fa fa-list-alt" aria-hidden="true"></i>Informe Inventarios</a></li>
 
         </ul>
