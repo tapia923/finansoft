@@ -14,7 +14,7 @@ $(document).ready(function () {
         var settings = $.extend({
             'controller': true,
             'width': '300px',
-            'background': '#274766',
+            'background': '#FFFFFF',
             'focusColor': '#1abc9c',
             'borderRadius': '10px',
             'top': '-5',

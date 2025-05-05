@@ -1437,13 +1437,13 @@ a {
     a:hover,
     a:focus {
         /*Jme*/
-        color: #274766;
+        color: #FFFFFF;
         text-decoration: underline;
     }
 
 #mensajes {
     color: #ddd;
-    background-color: #274766;
+    background-color: #FFFFFF;
     text-decoration: underline;
 }
 
@@ -7032,7 +7032,7 @@ button.list-group-item-danger {
 
     .panel-info > .panel-heading {
         color: #ddd;
-        background-color: #274766;
+        background-color: #FFFFFF;
         border-color: #bce8f1;
     }
 

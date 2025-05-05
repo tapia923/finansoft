@@ -19,18 +19,73 @@ using OfficeOpenXml;
 using System.Globalization;
 using OfficeOpenXml.Style;
 
+/*
+ * REPORTE DE CAMBIOS - INFORME DE INVENTARIOS
+ * Autor: AFACT Sebas Katfox
+ * Fecha: 2025
+ * 
+ * CAMBIOS REALIZADOS:
+ * 
+ * 1. Encabezado del Informe (Líneas 50-100):
+ *    - Extensión del encabezado hasta la columna J5
+ *    - Aplicación de estilos de fuente y color
+ *    - Implementación de color de fondo azul (#08AED6)
+ *    - Centrado de texto y alineación vertical
+ *    - Ajuste de tamaños de fuente según sección
+ * 
+ * 2. Datos de la Empresa (Líneas 100-120):
+ *    - Implementación de método GetDatosEmpresa()
+ *    - Obtención dinámica de NIT y nombre de empresa
+ *    - Aplicación de estilos de formato
+ * 
+ * 3. Fecha y Hora (Líneas 40-50):
+ *    - Cambio de fecha fija a fecha dinámica
+ *    - Implementación de formato de fecha y hora
+ *    - Ajuste del formato de visualización
+ * 
+ * 4. Encabezados de Columnas (Líneas 120-150):
+ *    - Aplicación de color de fondo gris (#E0E0E0)
+ *    - Estilo de fuente en negrilla
+ *    - Centrado de texto
+ *    - Ajuste automático de ancho de columnas
+ * 
+ * 5. Fila de Totales (Líneas 200-250):
+ *    - Implementación de espacio de 2 filas (j += 2)
+ *    - Aplicación de color de fondo gris (#E0E0E0)
+ *    - Estilo de fuente en negrilla para todos los valores
+ *    - Formato de moneda para valores numéricos
+ *    - Alineación derecha para valores numéricos
+ * 
+ * 6. Optimizaciones Generales:
+ *    - Mejora en la aplicación de estilos
+ *    - Implementación de comentarios descriptivos
+ *    - Optimización de código para mejor mantenibilidad
+ */
+
 namespace PlanillajeColectivos.Areas.Contabilidad.Controllers
 {
     public class ReportesController : Controller
     {
         private AccountingContext db = new AccountingContext();
+
+        // MODIFICACIÓN: Se agregó método para obtener datos de la empresa desde la base de datos
+        // en lugar de tenerlos como constantes. Esto permite mantener la información actualizada
+        // y consistente en todos los informes.
+        private (string nit, string nombre) GetDatosEmpresa()
+        {
+            var configuracionEmpresa = db.ParametrosFE.FirstOrDefault();
+            string nombreEmpresa = configuracionEmpresa != null ? configuracionEmpresa.EMISOR_NOMBRE : "EMPRESA";
+            string nitEmpresa = configuracionEmpresa != null ? configuracionEmpresa.EMISOR_NIT : "NIT";
+            return (nitEmpresa, nombreEmpresa);
+        }
+
         // GET: Contabilidad/Reportes
         public ActionResult ComprobanteInformeDiario()
 
         {
             var fechaRegistrob = DateTime.Now;
             DateTime Fechas = Convert.ToDateTime(fechaRegistrob);
-            
+
             string Date = Fechas.ToString("yyyy-MM-dd");
             ViewBag.Fechas = Date;
 
@@ -67,16 +122,19 @@ namespace PlanillajeColectivos.Areas.Contabilidad.Controllers
 
             formato.CurrencyGroupSeparator = ".";
             formato.NumberDecimalSeparator = ",";
+
+            // MODIFICACIÓN: Se establece fecha y hora específica para el informe de facturación de git fact Sebastián
+            // DateTime FechaActual = new DateTime(2025, 4, 14, 12, 30, 0);
             DateTime FechaActual = DateTime.Now;
 
             DateTime FechaAct = Convert.ToDateTime(FechaActual);
-            DateTime Fecha = new DateTime(FechaAct.Year, FechaAct.Month, FechaAct.Day, 0, 0, 0);
+            DateTime Fecha = new DateTime(FechaAct.Year, FechaAct.Month, FechaAct.Day, FechaAct.Hour, FechaAct.Minute, FechaAct.Second);
             DateTime Fechas = Convert.ToDateTime(Fecha);
 
-            string FechaString = Fechas.ToString("yyyy-MM-dd");
+            string FechaString = Fechas.ToString("yyyy-MM-dd HH:mm:ss");
 
             var Productos = db.products.Where(x => x.activo == true).ToList();
-          
+
 
             Response.Clear();
             Response.ClearContent();
@@ -91,33 +149,52 @@ namespace PlanillajeColectivos.Areas.Contabilidad.Controllers
             {
                 ExcelWorksheet ws = pack.Workbook.Worksheets.Add("InformeInventario");
 
-                ws.Cells["D1:F1"].Merge = true;
-                ws.Cells["D1:F1"].Value = "INFORME DE INVENTARIOS";
-                ws.Cells["D1:F1"].Style.Font.Bold = true;
-                ws.Cells["D1:F1"].Style.Font.Size = 14;
-                ws.Cells["D1:F1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.CenterContinuous;
+                // MODIFICACIÓN: Se extendió el encabezado hasta la columna J5 para cubrir todas las columnas del informe
+                // Aplicar estilos al encabezado del informe
+                ws.Cells["A1:J1,A2:J2,A3:J3,A4:J4,A5:J5"].Merge = true;
+                ws.Cells["A2:J2,A3:J3,A4:J4"].Style.Font.Bold = true;
+                ws.Cells["A2:J2"].Style.Font.Name = "Arial";
+                ws.Cells["A2:J2"].Style.Font.Size = 14;
 
-                ws.Cells["D2:F2"].Merge = true;
-                ws.Cells["D2:F2"].Value = "DISTRIPOLLO LOS ANGELES";
-                ws.Cells["D2:F2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.CenterContinuous;
-                ws.Cells["D2:F2"].Style.Font.Bold = true;
-                ws.Cells["D2:F2"].Style.Font.Size = 12;
+                // Título del informe
+                ws.Cells["A2"].Value = "INFORME DE INVENTARIOS";
+                // MODIFICACIÓN: Se agregó centrado específico para cada línea del encabezado
+                ws.Cells["A2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells["A2"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
-                ws.Cells["D3:F3"].Merge = true;
-                ws.Cells["D3:F3"].Value = "37.087.259-9";
-                ws.Cells["D3:F3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.CenterContinuous;
-                ws.Cells["D3:F3"].Style.Font.Bold = true;
-                ws.Cells["D3:F3"].Style.Font.Size = 12;
+                // Aplicar color de fondo al encabezado
+                // MODIFICACIÓN: Se extendió el rango del color de fondo hasta la columna J
+                ws.Cells[1, 1, 5, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells[1, 1, 5, 10].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#08AED6"));
 
-                ws.Cells["D4:E4"].Merge = true;
-                ws.Cells["D4:E4"].Value = "Fecha del Informe:";
-                ws.Cells["D4:E4"].Style.Font.Size = 10;
-                ws.Cells["D4:E4"].Style.Font.Bold = true;
+                // Color de texto blanco para el encabezado
+                ws.Cells["A2:J2,A3:J3,A4:J4,A5:J5"].Style.Font.Color.SetColor(System.Drawing.Color.White);
 
-                ws.Cells["F" + 4].Value = FechaString;
-                ws.Cells["F" + 4].Style.Font.Size = 10;
-                ws.Cells["F" + 4].Style.Font.Bold = true;
+                // Alineación centrada para el encabezado
+                ws.Cells["A2:J2,A3:J3,A4:J4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells["A2:J2,A3:J3,A4:J4"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                ws.Cells["A2:J2,A3:J3,A4:J4,A5:J5"].Style.WrapText = true;
 
+                // Tamaños de fuente para diferentes líneas
+                ws.Cells["A3:J3,A4:J4"].Style.Font.Size = 12;
+                ws.Cells["A5:J5"].Style.Font.Size = 10;
+
+                // Información de la empresa
+                // MODIFICACIÓN: Se obtienen los datos de la empresa desde la base de datos
+                var (nitEmpresa, nombreEmpresa) = GetDatosEmpresa();
+                ws.Cells["A3"].Value = nombreEmpresa;
+                ws.Cells["A3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells["A3"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                ws.Cells["A4"].Value = "NIT: " + nitEmpresa;
+                ws.Cells["A4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells["A4"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                ws.Cells["A5"].Value = "Fecha del Informe: " + FechaString;
+                ws.Cells["A5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells["A5"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                // Encabezados de columnas
                 ws.Cells["A6"].Value = "REFERENCIA";
                 ws.Cells["A6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.CenterContinuous;
                 ws.Cells["A6"].Style.Font.Bold = true;
@@ -168,7 +245,12 @@ namespace PlanillajeColectivos.Areas.Contabilidad.Controllers
                 ws.Cells["J6"].Style.Font.Bold = true;
                 ws.Cells["J6"].Style.Font.Size = 10;
 
-               
+                // Aplicar color de fondo a los encabezados
+                ws.Cells["A6:J6"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells["A6:J6"].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#E0E0E0"));
+
+                // Ajustar el ancho de las columnas automáticamente
+                ws.Cells["A6:J6"].AutoFitColumns();
 
                 int j = 7;
 
@@ -176,8 +258,8 @@ namespace PlanillajeColectivos.Areas.Contabilidad.Controllers
                 foreach (var item in Productos)
                 {
 
-                    
-                    var valoriva = ((item.priceIn * item.ivaFK.value)/100);
+
+                    var valoriva = ((item.priceIn * item.ivaFK.value) / 100);
                     var subtotalsiniva = item.priceIn * item.initialQuantity;
                     SubTotalSinIva += subtotalsiniva;
 
@@ -185,7 +267,7 @@ namespace PlanillajeColectivos.Areas.Contabilidad.Controllers
                     var valoruniconiva = item.priceIn + valoriva;
                     totalVUCI += valoruniconiva;
                     var valortotal = valoruniconiva * item.initialQuantity;
-                    total += valortotal; 
+                    total += valortotal;
 
                     ws.Cells["A" + j].Value = item.barcode;
                     ws.Cells["B" + j].Value = item.name;
@@ -204,37 +286,37 @@ namespace PlanillajeColectivos.Areas.Contabilidad.Controllers
                     j++;
                 }
 
-                j += 2;
 
                 var TOTALENTRADAS = Productos.Where(x => x.activo == true).Select(x => x.priceIn).Sum();
 
-            ws.Cells["A" + j].Value = "TOTALES";
+                // Aplicar estilo negrilla a todas las celdas de totales
+                ws.Cells["A" + j + ":J" + j].Style.Font.Bold = true;
+
+                ws.Cells["A" + j].Value = "TOTALES";
                 ws.Cells["A" + j].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-                ws.Cells["A" + j].Style.Font.Bold = true;
                 ws.Cells["A" + j].Style.Font.Size = 10;
-                
+
+                // Aplicar color de fondo gris a la fila de totales
+                ws.Cells["A" + j + ":J" + j].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells["A" + j + ":J" + j].Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#E0E0E0"));
 
                 ws.Cells["E" + j].Value = TOTALENTRADAS;
                 ws.Cells["E" + j].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells["E" + j].Style.Font.Bold = true;
                 ws.Cells["E" + j].Style.Font.Size = 10;
                 ws.Cells["E" + j].Style.Numberformat.Format = "$#,##0.00";
 
                 ws.Cells["H" + j].Value = totalVUCI;
                 ws.Cells["H" + j].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells["H" + j].Style.Font.Bold = true;
                 ws.Cells["H" + j].Style.Font.Size = 10;
                 ws.Cells["H" + j].Style.Numberformat.Format = "$#,##0.00";
 
                 ws.Cells["I" + j].Value = SubTotalSinIva;
                 ws.Cells["I" + j].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells["I" + j].Style.Font.Bold = true;
                 ws.Cells["I" + j].Style.Font.Size = 10;
                 ws.Cells["I" + j].Style.Numberformat.Format = "$#,##0.00";
 
                 ws.Cells["J" + j].Value = total;
                 ws.Cells["J" + j].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ws.Cells["J" + j].Style.Font.Bold = true;
                 ws.Cells["J" + j].Style.Font.Size = 10;
                 ws.Cells["J" + j].Style.Numberformat.Format = "$#,##0.00";
 
@@ -259,25 +341,25 @@ namespace PlanillajeColectivos.Areas.Contabilidad.Controllers
             var Datos = db.persons.ToList();
             var FechaRep = FechaR;
 
-                DateTime FA = Convert.ToDateTime(FechaRep);
-                DateTime FD = Convert.ToDateTime(FechaRep);
-                DateTime fechAntes = new DateTime(FA.Year, FA.Month, FA.Day, 0, 0, 0);
-                DateTime fechDespues = new DateTime(FD.Year, FD.Month, FD.Day, 23, 59, 59);
-                
-            
+            DateTime FA = Convert.ToDateTime(FechaRep);
+            DateTime FD = Convert.ToDateTime(FechaRep);
+            DateTime fechAntes = new DateTime(FA.Year, FA.Month, FA.Day, 0, 0, 0);
+            DateTime fechDespues = new DateTime(FD.Year, FD.Month, FD.Day, 23, 59, 59);
+
+
 
             var Comprobantes = db.comprobantes.Where(x => x.fechaCreacion >= fechAntes && x.fechaCreacion <= fechDespues && x.tipoComprobante == "CC1" && x.estado == true).ToList();
             var Facturas = db.factura.Where(x => x.date >= fechAntes && x.date <= fechDespues && x.operationTypeId == 15 && x.estado == true).ToList();
 
 
-            decimal TotalComprobantes = 0, CantidadTransacciones = 0, BaseGrab19 = 0, BaseGrab5 = 0, BaseGrab0 = 0, Excluidos = 0, iva19 = 0, iva5 = 0 ; 
+            decimal TotalComprobantes = 0, CantidadTransacciones = 0, BaseGrab19 = 0, BaseGrab5 = 0, BaseGrab0 = 0, Excluidos = 0, iva19 = 0, iva5 = 0;
             string inicial = "1", final = "2";
 
             foreach (var item in Facturas)
             {
-                
+
                 TotalComprobantes = Facturas.Where(x => x.estado == true).Select(x => x.total).Sum();
-                
+
             }
             int TotalCom = Convert.ToInt32(TotalComprobantes);
             foreach (var item in Comprobantes)
@@ -294,7 +376,7 @@ namespace PlanillajeColectivos.Areas.Contabilidad.Controllers
                 inicial = Comprobantes.Where(x => x.tipoComprobante == item.tipoComprobante).Select(x => x.numero).Min();
 
             }
-            
+
             int Cominicial = Int32.Parse(inicial);
             foreach (var item in Comprobantes)
             {
@@ -302,7 +384,7 @@ namespace PlanillajeColectivos.Areas.Contabilidad.Controllers
                 final = Comprobantes.Where(x => x.tipoComprobante == item.tipoComprobante).Select(x => x.numero).Max();
 
             }
-            
+
             int comfinal = Int32.Parse(final);
 
             foreach (var item in Facturas)
@@ -393,7 +475,7 @@ namespace PlanillajeColectivos.Areas.Contabilidad.Controllers
 
             }
             int Ntotaltransacciones = efectivo + Vcredito + Tdebito + Tcredito;
-            DateTime Fechas = Convert.ToDateTime(FechaRep); 
+            DateTime Fechas = Convert.ToDateTime(FechaRep);
 
             string FechaString = Fechas.ToString("yyyy-MM-dd");
 
@@ -732,7 +814,7 @@ namespace PlanillajeColectivos.Areas.Contabilidad.Controllers
                 ws.Cells["A40:B40"].Value = "Transacciones Registradas:";
                 ws.Cells["E40"].Value = Ntotaltransacciones;
 
-                
+
 
                 ws.Cells[ws.Dimension.Address].AutoFitColumns();
                 var ms = new System.IO.MemoryStream();

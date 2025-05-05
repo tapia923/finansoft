@@ -11,7 +11,7 @@ body
 }
 #headerWrapper
 {
-	    background-color: #274766;
+	    background-color: #FFFFFF;
 }
 footer, footer a
 {
@@ -31,13 +31,13 @@ footer a:hover
 #content{margin-left:0px;}.sidebar-left{margin-left:0px;}	
 .groupTitle h3
 {
-	color:#274766!important;	
+	color:#FFFFFF!important;	
     font-weight: bold;
     text-decoration: none;
 }
 .navActive {
     background-color: #a9d7ed !important;
-    color:#274766;
+    color:#FFFFFF;
     font-weight: bold;
 }
 
